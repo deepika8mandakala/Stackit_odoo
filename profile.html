@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Profile - Stackit</title>
+    <title>Notifications - Stackit</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -13,7 +13,7 @@
             background-color: #f0f2f5;
         }
         .odoo-navbar {
-            background-color:#714b67; /* Indigo-600 */
+            background-color: #714b67; /* Indigo-600 */
             color: white;
             padding: 1rem 2rem;
             display: flex;
@@ -29,7 +29,7 @@
             transition: background-color 0.15s ease-in-out;
         }
         .odoo-navbar a:hover {
-            background-color: #714b67; /* Indigo-700 */
+            background-color:#714b67; /* Indigo-700 */
         }
         .odoo-navbar .user-profile {
             display: flex;
@@ -48,56 +48,17 @@
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             padding: 2rem;
         }
-        .odoo-button {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 0.5rem 1rem;
-            border-radius: 0.375rem;
-            font-weight: 500;
-            transition: all 0.15s ease-in-out;
-        }
-        .odoo-primary-button {
-            background-color: #714b67;
-            color: #ffffff;
-            border: 1px solid transparent;
-        }
-        .odoo-primary-button:hover {
-            background-color: #714b67;
-        }
-        .odoo-secondary-button {
-            background-color: #e0e7ff;
-            color: #714b67;
-            border: 1px solid transparent;
-        }
-        .odoo-secondary-button:hover {
-            background-color: #c7d2fe;
-        }
-        .question-item, .answer-item {
+        .notification-item {
             background-color: #ffffff;
             border-radius: 0.5rem;
-            padding: 1.5rem;
-            margin-bottom: 1rem;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
             box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            border-left: 4px solid transparent;
         }
-        .question-item a, .answer-item a {
-            color: #714b67;
-            font-weight: 600;
-            text-decoration: none;
-        }
-        .question-item a:hover, .answer-item a:hover {
-            text-decoration: underline;
-        }
-        .tag {
-            display: inline-block;
-            background-color: #e0e7ff;
-            color: #714b67;
-            padding: 0.25rem 0.75rem;
-            border-radius: 0.25rem;
-            font-size: 0.75rem;
-            font-weight: 500;
-            margin-right: 0.5rem;
-            margin-bottom: 0.5rem;
+        .notification-item.unread {
+            border-left-color: #714b67; /* Indigo-600 for unread */
+            background-color: #eff6ff; /* Blue-50 */
         }
     </style>
 </head>
@@ -113,41 +74,33 @@
                 <span id="notification-count" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full px-1 py-0.5 hidden">0</span>
             </a>
             <div class="user-profile">
-                <a href="profile.html" class="flex items-center gap-0.5">
-                    <img src="https://placehold.co/32x32/6366f1/ffffff?text=U" alt="User Avatar">
-                    <span id="user-display-name">Loading...</span>
-                </a>
-                <button id="logout-button-nav" class="odoo-button odoo-secondary-button ml-2">Logout</button>
+                <img src="https://placehold.co/32x32/6366f1/ffffff?text=U" alt="User Avatar">
+                <span id="user-display-name">Loading...</span>
+                <button id="logout-button" class="odoo-button odoo-secondary-button ml-2">Logout</button>
             </div>
         </div>
     </nav>
 
     <!-- Main Content -->
     <main class="flex-grow container mx-auto p-4">
-        <div class="odoo-card mx-auto max-w-3xl text-center mb-6">
-            <img id="profile-pic" src="https://placehold.co/100x100/6366f1/ffffff?text=User" alt="Profile Picture" class="rounded-full mx-auto mb-4">
-            <h1 id="profile-name" class="text-3xl font-bold text-gray-800 mb-2">Loading Name...</h1>
-            <p id="profile-email" class="text-gray-600 mb-4">Loading Email...</p>
-            <button id="logout-button-profile" class="odoo-button odoo-primary-button">Logout</button>
-        </div>
+        <div class="odoo-card mx-auto max-w-3xl">
+            <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">Your Notifications</h1>
 
-        <div class="odoo-card">
-            <h2 class="text-2xl font-bold text-gray-800 mb-4">My Questions</h2>
-            <div id="my-questions-list" class="space-y-4">
-                <p class="text-gray-500">Loading questions...</p>
+            <div id="notifications-list" class="space-y-3">
+                <p class="text-gray-500 text-center">Loading notifications...</p>
+                <!-- Notifications will be loaded here by JavaScript -->
             </div>
         </div>
-
-        <!-- Removed "My Answers" Section -->
     </main>
 
     <!-- Firebase SDKs -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, query, where, orderBy, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, collection, query, where, orderBy, getDocs, updateDoc, doc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // Your web app's Firebase configuration
+        // IMPORTANT: Replace these placeholder values with your actual Firebase project configuration.
         const firebaseConfig = {
             apiKey: "AIzaSyBlmC_4Td49uysEm2u8oi_4wSkCaULSHTY",
   authDomain: "oddohack.firebaseapp.com",
@@ -155,7 +108,7 @@
   storageBucket: "oddohack.firebasestorage.app",
   messagingSenderId: "1083386693457",
   appId: "1:1083386693457:web:e1129b47cacf62e4c0f570",
-  measurementId: "G-29VWYY28TB"
+  measurementId: "G-29VWYY28TB"
         };
 
         // Initialize Firebase
@@ -174,12 +127,8 @@
         }
 
         const userDisplayNameElement = document.getElementById('user-display-name');
-        const logoutButtonNav = document.getElementById('logout-button-nav');
-        const logoutButtonProfile = document.getElementById('logout-button-profile');
-        const profileNameElement = document.getElementById('profile-name');
-        const profileEmailElement = document.getElementById('profile-email');
-        const profilePicElement = document.getElementById('profile-pic');
-        const myQuestionsList = document.getElementById('my-questions-list');
+        const logoutButton = document.getElementById('logout-button');
+        const notificationsList = document.getElementById('notifications-list');
         const notificationCount = document.getElementById('notification-count');
 
         // Authenticate user and load data
@@ -187,10 +136,7 @@
             if (user) {
                 currentUser = user;
                 userDisplayNameElement.textContent = user.email || 'User';
-                profileNameElement.textContent = user.displayName || user.email || 'User';
-                profileEmailElement.textContent = user.email || 'N/A';
-                
-                await loadMyQuestions(user.uid);
+                await loadNotifications(user.uid);
                 // loadNotificationsCount(user.uid); // Placeholder for notification count
             } else {
                 // User is signed out, redirect to login page
@@ -198,66 +144,95 @@
             }
         });
 
-        // Handle Logout (from navbar and profile page button)
-        const handleLogout = async () => {
+        // Handle Logout
+        logoutButton.addEventListener('click', async () => {
             if (auth) {
                 try {
                     await signOut(auth);
-                    window.location.href = 'user.html'; // Redirect to user.html as requested
+                    window.location.href = 'index.html'; // Redirect to index.html after logout
                 } catch (error) {
                     console.error("Logout error:", error);
                     alert(`Logout failed: ${error.message}`);
                 }
             }
-        };
-        logoutButtonNav.addEventListener('click', handleLogout);
-        logoutButtonProfile.addEventListener('click', handleLogout);
+        });
 
-        // Function to load questions posted by the current user
-        async function loadMyQuestions(userId) {
-            myQuestionsList.innerHTML = '<p class="text-gray-500">Loading your questions...</p>';
+        // Function to load notifications from Firestore
+        async function loadNotifications(userId) {
+            notificationsList.innerHTML = '<p class="text-gray-500 text-center">Loading notifications...</p>';
             try {
                 const q = query(
-                    collection(db, "questions"),
+                    collection(db, "notifications"),
                     where("userId", "==", userId),
                     orderBy("timestamp", "desc")
                 );
                 const querySnapshot = await getDocs(q);
-                myQuestionsList.innerHTML = ''; // Clear loading message
+                notificationsList.innerHTML = ''; // Clear loading message
+                let unreadCount = 0;
 
                 if (querySnapshot.empty) {
-                    myQuestionsList.innerHTML = '<p class="text-gray-500">You haven\'t posted any questions yet.</p>';
+                    notificationsList.innerHTML = '<p class="text-gray-500 text-center">No notifications yet.</p>';
+                    notificationCount.classList.add('hidden');
                     return;
                 }
 
                 querySnapshot.forEach((docSnap) => {
-                    const question = docSnap.data();
-                    const questionId = docSnap.id;
-                    const tagsHtml = (question.tags || []).map(tag => `<span class="tag">${tag}</span>`).join('');
-                    const questionHtml = `
-                        <div class="question-item">
-                            <a href="question_detail.html?id=${questionId}" class="text-xl">${question.title}</a>
-                            <p class="text-gray-600 text-sm mt-2">${question.description.substring(0, 100)}...</p>
-                            <div class="flex flex-wrap items-center mt-3">
-                                ${tagsHtml}
-                                <span class="text-gray-500 text-xs ml-auto">Posted on ${question.timestamp ? new Date(question.timestamp.toDate()).toLocaleDateString() : 'N/A'}</span>
-                            </div>
+                    const notification = docSnap.data();
+                    const notificationId = docSnap.id;
+                    const isUnread = !notification.read;
+                    if (isUnread) unreadCount++;
+
+                    const notificationHtml = `
+                        <div class="notification-item ${isUnread ? 'unread' : ''}" data-notification-id="${notificationId}">
+                            <p class="text-gray-800">${notification.message}</p>
+                            <span class="text-gray-500 text-xs mt-1 block">${notification.timestamp ? new Date(notification.timestamp.toDate()).toLocaleString() : 'N/A'}</span>
+                            ${isUnread ? '<button class="odoo-text-link text-xs mt-2" data-action="mark-read">Mark as Read</button>' : ''}
                         </div>
                     `;
-                    myQuestionsList.innerHTML += questionHtml;
+                    notificationsList.innerHTML += notificationHtml;
                 });
+
+                // Update notification count display
+                if (unreadCount > 0) {
+                    notificationCount.textContent = unreadCount;
+                    notificationCount.classList.remove('hidden');
+                } else {
+                    notificationCount.classList.add('hidden');
+                }
+
+                // Attach event listeners for "Mark as Read" buttons
+                document.querySelectorAll('button[data-action="mark-read"]').forEach(button => {
+                    button.addEventListener('click', handleMarkAsRead);
+                });
+
             } catch (error) {
-                console.error("Error loading user questions:", error);
-                myQuestionsList.innerHTML = '<p class="text-red-500">Error loading your questions.</p>';
+                console.error("Error loading notifications:", error);
+                notificationsList.innerHTML = '<p class="text-red-500 text-center">Error loading notifications. Please try again.</p>';
+                notificationCount.classList.add('hidden');
             }
         }
 
-        // Placeholder for loading notification count
+        // Handle marking notification as read
+        async function handleMarkAsRead(event) {
+            const notificationId = event.target.dataset.notificationId;
+            if (!notificationId) return;
+
+            try {
+                const notificationRef = doc(db, "notifications", notificationId);
+                await updateDoc(notificationRef, { read: true });
+                await loadNotifications(currentUser.uid); // Reload notifications to update UI
+            } catch (error) {
+                console.error("Error marking notification as read:", error);
+                alert(`Error marking notification as read: ${error.message}`);
+            }
+        }
+
+        // Placeholder for loading notification count (for navbar)
+        // This function would be called on page load in user.html and ask_question.html
         function loadNotificationsCount(userId) {
-            // In a real app, you would query Firestore for unread notifications for this userId
-            // For now, let's just show a static number or hide it
-            // notificationCount.textContent = '5'; // Example
-            // notificationCount.classList.remove('hidden');
+            // This would typically be a real-time listener or a quick query
+            // For now, it's just a placeholder to show where it would be called.
+            // The actual count is handled by loadNotifications on this page.
         }
     </script>
 </body>

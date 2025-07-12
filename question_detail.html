@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Question - Stackit</title>
+    <title>Stackit - Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -13,7 +13,7 @@
             background-color: #f0f2f5;
         }
         .odoo-navbar {
-            background-color: #dd46e5; /* Indigo-600 */
+            background-color: #4f46e5; /* Indigo-600 */
             color: white;
             padding: 1rem 2rem;
             display: flex;
@@ -29,7 +29,7 @@
             transition: background-color 0.15s ease-in-out;
         }
         .odoo-navbar a:hover {
-            background-color: #bb38ca; /* Indigo-700 */
+            background-color: #4338ca; /* Indigo-700 */
         }
         .odoo-navbar .user-profile {
             display: flex;
@@ -40,20 +40,13 @@
             width: 32px;
             height: 32px;
             border-radius: 50%;
-            background-color: #f18bfa; /* Indigo-300 */
+            background-color: #a78bfa; /* Indigo-300 */
         }
         .odoo-card {
             background-color: #ffffff;
             border-radius: 0.5rem;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             padding: 2rem;
-        }
-        .odoo-input {
-            border: 1px solid #d1d5db;
-            border-radius: 0.375rem;
-            padding: 0.5rem 1rem;
-            width: 100%;
-            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
         }
         .odoo-button {
             display: flex;
@@ -65,25 +58,44 @@
             transition: all 0.15s ease-in-out;
         }
         .odoo-primary-button {
-            background-color: #d046e5;
+            background-color: #4f46e5;
             color: #ffffff;
             border: 1px solid transparent;
         }
         .odoo-primary-button:hover {
-            background-color: #be38ca;
+            background-color: #4338ca;
         }
         .odoo-secondary-button {
             background-color: #e0e7ff;
-            color: #e546e5;
+            color: #4f46e5;
             border: 1px solid transparent;
         }
         .odoo-secondary-button:hover {
             background-color: #c7d2fe;
         }
+        .question-item {
+            background-color: #ffffff;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            transition: transform 0.1s ease-in-out;
+        }
+        .question-item:hover {
+            transform: translateY(-2px);
+        }
+        .question-item a {
+            color: #4f46e5;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .question-item a:hover {
+            text-decoration: underline;
+        }
         .tag {
             display: inline-block;
             background-color: #e0e7ff;
-            color: #e246e5;
+            color: #4f46e5;
             padding: 0.25rem 0.75rem;
             border-radius: 0.25rem;
             font-size: 0.75rem;
@@ -91,50 +103,28 @@
             margin-right: 0.5rem;
             margin-bottom: 0.5rem;
         }
-        .answer-item {
-            background-color: #ffffff;
-            border-radius: 0.5rem;
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-            display: flex;
-            align-items: flex-start;
+        .search-input {
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+            padding: 0.5rem 1rem;
+            width: 100%;
+            max-width: 300px; /* Adjust as needed */
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
         }
-        .answer-item.accepted {
-            border: 2px solid #10b981; /* Green-500 for accepted answer */
-            box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.3), 0 2px 4px -1px rgba(16, 185, 129, 0.2);
-        }
-        .vote-controls {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-right: 1rem;
-            color: #6b7280;
-        }
-        .vote-controls button {
-            background: none;
-            border: none;
+        /* AI Chatbot Icon Styling */
+        .ai-chatbot-icon {
+            position: fixed;
+            bottom: 1.5rem; /* Consistent with p-6 */
+            right: 1.5rem; /* Consistent with p-6 */
+            font-size: 3rem; /* Larger icon size */
+            color: #4f46e5; /* Matches the primary color */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+            transition: transform 0.2s ease-in-out;
             cursor: pointer;
-            font-size: 1.5rem;
-            color: #6b7280;
-            transition: color 0.15s ease-in-out;
         }
-        .vote-controls button:hover {
-            color: #e546e5;
-        }
-        .vote-controls .vote-count {
-            font-weight: 600;
-            font-size: 1.125rem;
-            margin: 0.25rem 0;
-        }
-        .accepted-badge {
-            background-color: #10b981; /* Green-500 */
-            color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 0.25rem;
-            font-size: 0.875rem;
-            font-weight: 600;
-            margin-left: 1rem;
+        .ai-chatbot-icon:hover {
+            transform: scale(1.1);
+            color: #4338ca; /* Darker shade on hover */
         }
     </style>
 </head>
@@ -150,8 +140,10 @@
                 <span id="notification-count" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full px-1 py-0.5 hidden">0</span>
             </a>
             <div class="user-profile">
-                <img src="https://placehold.co/32x32/6366f1/ffffff?text=U" alt="User Avatar">
-                <span id="user-display-name">Loading...</span>
+                <a href="profile.html" class="flex items-center gap-0.5">
+                    <img src="https://placehold.co/32x32/6366f1/ffffff?text=U" alt="User Avatar">
+                    <span id="user-display-name">Loading...</span>
+                </a>
                 <button id="logout-button" class="odoo-button odoo-secondary-button ml-2">Logout</button>
             </div>
         </div>
@@ -159,69 +151,62 @@
 
     <!-- Main Content -->
     <main class="flex-grow container mx-auto p-4">
-        <div id="question-detail" class="odoo-card mb-6">
-            <p class="text-gray-500 text-center">Loading question details...</p>
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-3xl font-bold text-gray-800">Recent Questions</h1>
+            <div class="flex space-x-2 items-center">
+                <input type="text" id="search-input" class="search-input" placeholder="Search questions...">
+                <button id="my-questions-filter-btn" class="odoo-button odoo-secondary-button">My Questions</button>
+                <button id="newest-filter-btn" class="odoo-button odoo-secondary-button">Newest (Today)</button>
+                <button id="unanswered-filter-btn" class="odoo-button odoo-secondary-button">Unanswered</button>
+            </div>
         </div>
 
-        <div id="answers-section" class="mt-8">
-            <h2 class="text-2xl font-bold text-gray-800 mb-4">Answers</h2>
-            <div id="answers-list" class="space-y-4">
-                <p class="text-gray-500 text-center">No answers yet. Be the first to answer!</p>
-            </div>
+        <div id="questions-list" class="space-y-4">
+            <!-- Questions will be loaded here by JavaScript -->
+            <p class="text-gray-500 text-center">Loading questions...</p>
+        </div>
 
-            <div id="post-answer-section" class="odoo-card mt-8">
-                <h3 class="text-xl font-bold text-gray-800 mb-4">Your Answer</h3>
-                <form id="answer-form" class="space-y-4">
-                    <div>
-                        <label for="answer-content" class="block text-sm font-medium text-gray-700 mb-1">Content</label>
-                        <textarea
-                            id="answer-content"
-                            class="odoo-input h-40 resize-y focus:ring-indigo-500 focus:border-indigo-500"
-                            placeholder="Write your answer here..."
-                            required
-                        ></textarea>
-                        <p class="text-sm text-gray-500 mt-1">
-                            * For a rich text editor (bold, italic, lists, etc.), integrate a library like Quill.js or TinyMCE here.
-                        </p>
-                    </div>
-                    <button
-                        type="submit"
-                        id="submit-answer-button"
-                        class="odoo-button odoo-primary-button w-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    >
-                        Post Your Answer
-                    </button>
-                </form>
-                <div id="answer-message-box" class="mt-4 hidden"></div>
-            </div>
+        <!-- Pagination Controls -->
+        <div id="pagination-controls" class="flex justify-center items-center mt-6 space-x-4">
+            <button id="prev-page-btn" class="odoo-button odoo-secondary-button" disabled>Previous</button>
+            <span id="page-info" class="text-gray-700">Page 1 of 1</span>
+            <button id="next-page-btn" class="odoo-button odoo-secondary-button" disabled>Next</button>
         </div>
     </main>
+
+    <!-- AI Chatbot Icon -->
+    <div class="ai-chatbot-icon">
+        <i class="fas fa-robot"></i>
+    </div>
 
     <!-- Firebase SDKs -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc, collection, query, where, addDoc, serverTimestamp, updateDoc, arrayUnion, arrayRemove, getDocs as getDocsFromCollection } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, collection, query, orderBy, getDocs, where } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // Your web app's Firebase configuration
         // IMPORTANT: Replace these placeholder values with your actual Firebase project configuration.
         const firebaseConfig = {
             apiKey: "AIzaSyBlmC_4Td49uysEm2u8oi_4wSkCaULSHTY",
-  authDomain: "oddohack.firebaseapp.com",
-  projectId: "oddohack",
-  storageBucket: "oddohack.firebasestorage.app",
-  messagingSenderId: "1083386693457",
-  appId: "1:1083386693457:web:e1129b47cacf62e4c0f570",
-  measurementId: "G-29VWYY28TB"
+            authDomain: "oddohack.firebaseapp.com",
+            projectId: "oddohack",
+            storageBucket: "oddohack.firebasestorage.app",
+            messagingSenderId: "1083386693457",
+            appId: "1:1083386693457:web:e1129b47cacf62e4c0f570",
+            measurementId: "G-29VWYY28TB"
         };
 
         // Initialize Firebase
         let app;
         let auth;
         let db;
-        let currentUser = null;
-        let currentQuestionId = null;
-        let currentQuestionOwnerId = null; // To store the ID of the user who asked the question
+        let allQuestions = []; // Store all questions for client-side filtering
+        let currentPage = 1;
+        const itemsPerPage = 10; // Display 10 questions per page
+        let currentFilteredQuestions = []; // Store questions after search/filter for pagination
+        let currentUser = null; // To store the current authenticated user
+
 
         try {
             app = initializeApp(firebaseConfig);
@@ -234,38 +219,25 @@
 
         const userDisplayNameElement = document.getElementById('user-display-name');
         const logoutButton = document.getElementById('logout-button');
-        const questionDetailDiv = document.getElementById('question-detail');
-        const answersListDiv = document.getElementById('answers-list');
-        const answerForm = document.getElementById('answer-form');
-        const answerContentInput = document.getElementById('answer-content');
-        const answerMessageBox = document.getElementById('answer-message-box');
+        const questionsList = document.getElementById('questions-list');
         const notificationCount = document.getElementById('notification-count');
-        const postAnswerSection = document.getElementById('post-answer-section'); // Get the section to hide/show
+        const searchInput = document.getElementById('search-input');
+        const myQuestionsFilterBtn = document.getElementById('my-questions-filter-btn'); // New button
+        const newestFilterBtn = document.getElementById('newest-filter-btn');
+        const unansweredFilterBtn = document.getElementById('unanswered-filter-btn');
+        const prevPageBtn = document.getElementById('prev-page-btn');
+        const nextPageBtn = document.getElementById('next-page-btn');
+        const pageInfoSpan = document.getElementById('page-info');
 
-        // Function to display messages for answers
-        function displayAnswerMessage(msg, type = "success") {
-            answerMessageBox.textContent = msg;
-            answerMessageBox.className = `mt-4 p-3 rounded-md text-sm ${type === "success" ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"}`;
-            answerMessageBox.classList.remove('hidden');
-        }
 
         // Authenticate user and load data
         onAuthStateChanged(auth, async (user) => {
             if (user) {
-                currentUser = user;
-                userDisplayNameElement.textContent = user.email || 'User';
+                // User is signed in
+                currentUser = user; // Store the current user
+                userDisplayNameElement.textContent = user.email || 'User'; // Display user email
+                await loadAllQuestions(); // Load all questions initially
                 // loadNotificationsCount(user.uid); // Placeholder for notification count
-
-                // Get question ID from URL
-                const urlParams = new URLSearchParams(window.location.search);
-                currentQuestionId = urlParams.get('id');
-
-                if (currentQuestionId) {
-                    await loadQuestionAndAnswers(currentQuestionId);
-                } else {
-                    questionDetailDiv.innerHTML = '<p class="text-red-500 text-center">Question ID not found in URL.</p>';
-                    postAnswerSection.classList.add('hidden'); // Hide answer section if no question
-                }
             } else {
                 // User is signed out, redirect to login page
                 window.location.href = 'login.html';
@@ -285,232 +257,145 @@
             }
         });
 
-        // Function to load question and answers
-        async function loadQuestionAndAnswers(questionId) {
-            questionDetailDiv.innerHTML = '<p class="text-gray-500 text-center">Loading question details...</p>';
-            answersListDiv.innerHTML = '<p class="text-gray-500 text-center">Loading answers...</p>';
-
+        // Function to load ALL questions from Firestore (for client-side filtering)
+        async function loadAllQuestions() {
+            questionsList.innerHTML = '<p class="text-gray-500 text-center">Loading questions...</p>';
             try {
-                // Load Question
-                const questionRef = doc(db, "questions", questionId);
-                const questionSnap = await getDoc(questionRef);
-
-                if (questionSnap.exists()) {
-                    const question = questionSnap.data();
-                    currentQuestionOwnerId = question.userId; // Store question owner ID
-                    const tagsHtml = question.tags.map(tag => `<span class="tag">${tag}</span>`).join('');
-                    questionDetailDiv.innerHTML = `
-                        <h1 class="text-3xl font-bold text-gray-800 mb-4">${question.title}</h1>
-                        <p class="text-gray-700 mb-4">${question.description}</p>
-                        <div class="flex flex-wrap items-center mt-3 border-t pt-3 border-gray-200">
-                            ${tagsHtml}
-                            <span class="text-gray-500 text-sm ml-auto">Asked by ${question.userName || 'Anonymous'} on ${question.timestamp ? new Date(question.timestamp.toDate()).toLocaleDateString() : 'N/A'}</span>
-                        </div>
-                    `;
-                } else {
-                    questionDetailDiv.innerHTML = '<p class="text-red-500 text-center">Question not found.</p>';
-                    postAnswerSection.classList.add('hidden'); // Hide answer section if question not found
-                    return;
+                // Fetch all questions. For very large datasets, consider pagination.
+                const q = query(collection(db, "questions"), orderBy("timestamp", "desc"));
+                const querySnapshot = await getDocs(q);
+                
+                allQuestions = []; // Clear previous questions
+                for (const doc of querySnapshot.docs) {
+                    const questionData = { id: doc.id, ...doc.data() };
+                    // Fetch answer count for each question
+                    const answersQuery = query(collection(db, "answers"), where("questionId", "==", questionData.id));
+                    const answersSnap = await getDocs(answersQuery);
+                    questionData.answerCount = answersSnap.size; // Add answerCount to question object
+                    allQuestions.push(questionData);
                 }
-
-                // Load Answers
-                const answersQuery = query(collection(db, "answers"), where("questionId", "==", questionId));
-                const answersSnap = await getDocsFromCollection(answersQuery); // Renamed getDocs to avoid conflict
-                answersListDiv.innerHTML = ''; // Clear loading message
-
-                if (answersSnap.empty) {
-                    answersListDiv.innerHTML = '<p class="text-gray-500 text-center">No answers yet. Be the first to answer!</p>';
-                } else {
-                    answersSnap.forEach((docSnap) => {
-                        const answer = docSnap.data();
-                        const answerId = docSnap.id;
-                        const upvotes = answer.upvotes || [];
-                        const downvotes = answer.downvotes || [];
-                        const totalVotes = upvotes.length - downvotes.length;
-
-                        const isAccepted = answer.accepted ? '<span class="accepted-badge">Accepted Answer</span>' : '';
-                        const isQuestionOwner = currentUser && currentUser.uid === currentQuestionOwnerId;
-                        
-                        // Check if current user has upvoted/downvoted
-                        const hasUpvoted = currentUser && upvotes.includes(currentUser.uid);
-                        const hasDownvoted = currentUser && downvotes.includes(currentUser.uid);
-
-                        const upvoteClass = hasUpvoted ? 'text-indigo-600' : '';
-                        const downvoteClass = hasDownvoted ? 'text-indigo-600' : '';
-
-                        const acceptButtonHtml = isQuestionOwner && !answer.accepted ?
-                            `<button class="odoo-button odoo-secondary-button ml-auto text-sm" data-answer-id="${answerId}" data-action="accept">Accept</button>` : '';
-
-                        const answerHtml = `
-                            <div class="answer-item ${answer.accepted ? 'accepted' : ''}">
-                                <div class="vote-controls">
-                                    <button class="upvote-btn ${upvoteClass}" data-answer-id="${answerId}" data-action="upvote"><i class="fas fa-caret-up"></i></button>
-                                    <span class="vote-count">${totalVotes}</span>
-                                    <button class="downvote-btn ${downvoteClass}" data-answer-id="${answerId}" data-action="downvote"><i class="fas fa-caret-down"></i></button>
-                                </div>
-                                <div class="flex-grow">
-                                    <div class="flex items-center mb-2">
-                                        <span class="font-semibold text-gray-800">${answer.userName || 'Anonymous'}</span>
-                                        <span class="text-gray-500 text-xs ml-2">answered on ${answer.timestamp ? new Date(answer.timestamp.toDate()).toLocaleDateString() : 'N/A'}</span>
-                                        ${isAccepted}
-                                        ${acceptButtonHtml}
-                                    </div>
-                                    <p class="text-gray-700">${answer.content}</p>
-                                </div>
-                            </div>
-                        `;
-                        answersListDiv.innerHTML += answerHtml;
-                    });
-
-                    // Attach event listeners for voting and accepting after answers are rendered
-                    document.querySelectorAll('.upvote-btn').forEach(button => {
-                        button.addEventListener('click', (e) => handleVote(e, 'upvote'));
-                    });
-                    document.querySelectorAll('.downvote-btn').forEach(button => {
-                        button.addEventListener('click', (e) => handleVote(e, 'downvote'));
-                    });
-                    document.querySelectorAll('button[data-action="accept"]').forEach(button => {
-                        button.addEventListener('click', handleAcceptAnswer);
-                    });
-                }
+                
+                currentFilteredQuestions = [...allQuestions]; // Initially, all questions are filtered
+                currentPage = 1; // Reset to first page
+                displayQuestionsForCurrentPage(); // Display questions for the current page
             } catch (error) {
-                console.error("Error loading question or answers:", error);
-                questionDetailDiv.innerHTML = '<p class="text-red-500 text-center">Error loading content. Please try again.</p>';
-                answersListDiv.innerHTML = '';
-                postAnswerSection.classList.add('hidden'); // Hide answer section on error
+                console.error("Error loading questions:", error);
+                questionsList.innerHTML = '<p class="text-red-500 text-center">Error loading questions. Please try again.</p>';
             }
         }
 
-        // Handle Answer Submission
-        answerForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            answerMessageBox.classList.add('hidden');
+        // Function to display questions for the current page
+        function displayQuestionsForCurrentPage() {
+            questionsList.innerHTML = ''; // Clear current list
 
-            if (!currentUser) {
-                displayAnswerMessage("You must be logged in to post an answer.", "error");
-                return;
-            }
-            if (!currentQuestionId) {
-                displayAnswerMessage("Cannot post answer: Question ID is missing.", "error");
-                return;
-            }
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const questionsToDisplay = currentFilteredQuestions.slice(startIndex, endIndex);
 
-            const content = answerContentInput.value.trim();
-            if (!content) {
-                displayAnswerMessage("Please write your answer content.", "error");
+            if (questionsToDisplay.length === 0) {
+                questionsList.innerHTML = '<p class="text-gray-500 text-center">No questions found matching your criteria.</p>';
+                updatePaginationControls(0, 0); // Update controls for no items
                 return;
             }
 
-            try {
-                await addDoc(collection(db, "answers"), {
-                    questionId: currentQuestionId,
-                    content: content,
-                    userId: currentUser.uid,
-                    userName: currentUser.email || 'Anonymous',
-                    timestamp: serverTimestamp(),
-                    upvotes: [],
-                    downvotes: [],
-                    accepted: false
+            questionsToDisplay.forEach((question) => {
+                const tagsHtml = (question.tags || []).map(tag => `<span class="tag">${tag}</span>`).join(''); // Ensure tags is an array
+                const questionHtml = `
+                    <div class="question-item">
+                        <h3 class="text-xl font-semibold text-gray-800">${question.title}</h3>
+                        <p class="text-gray-600 text-sm mt-2">${question.description.substring(0, 150)}...</p>
+                        <div class="flex flex-wrap items-center mt-3">
+                            ${tagsHtml}
+                            <span class="text-gray-500 text-xs ml-auto">Asked by ${question.userName || 'Anonymous'} on ${question.timestamp ? new Date(question.timestamp.toDate()).toLocaleDateString() : 'N/A'}</span>
+                        </div>
+                        <div class="mt-4 flex justify-between items-center">
+                            <span class="text-gray-700 text-sm font-medium">Answers: ${question.answerCount !== undefined ? question.answerCount : 'N/A'}</span>
+                            <a href="question_detail.html?id=${question.id}" class="odoo-button odoo-secondary-button inline-flex items-center text-sm">
+                                View Answers <i class="fas fa-arrow-right ml-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                `;
+                questionsList.innerHTML += questionHtml;
+            });
+
+            updatePaginationControls(currentFilteredQuestions.length, itemsPerPage);
+        }
+
+        // Function to update pagination controls
+        function updatePaginationControls(totalItems, itemsPerPage) {
+            const totalPages = Math.ceil(totalItems / itemsPerPage);
+            pageInfoSpan.textContent = `Page ${currentPage} of ${totalPages === 0 ? 1 : totalPages}`;
+            prevPageBtn.disabled = currentPage === 1;
+            nextPageBtn.disabled = currentPage === totalPages || totalPages === 0;
+        }
+
+        // Handle search input
+        searchInput.addEventListener('input', () => {
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            if (searchTerm === '') {
+                currentFilteredQuestions = [...allQuestions];
+            } else {
+                currentFilteredQuestions = allQuestions.filter(question => {
+                    const titleMatch = question.title.toLowerCase().includes(searchTerm);
+                    const descriptionMatch = question.description.toLowerCase().includes(searchTerm);
+                    // Ensure tags exist and are an array before calling .some()
+                    const tagsMatch = Array.isArray(question.tags) && question.tags.some(tag => tag.toLowerCase().includes(searchTerm));
+                    return titleMatch || descriptionMatch || tagsMatch;
                 });
+            }
+            currentPage = 1; // Reset to first page after search
+            displayQuestionsForCurrentPage();
+        });
 
-                displayAnswerMessage("Answer posted successfully!", "success");
-                answerContentInput.value = ''; // Clear the form
-                await loadQuestionAndAnswers(currentQuestionId); // Reload answers to show the new one
-                // TODO: Implement notification for question owner
-            } catch (error) {
-                console.error("Error adding answer: ", error);
-                displayAnswerMessage(`Error posting answer: ${error.message}`, "error");
+        // Handle "My Questions" filter button
+        myQuestionsFilterBtn.addEventListener('click', () => {
+            if (currentUser) {
+                currentFilteredQuestions = allQuestions.filter(question => question.userId === currentUser.uid);
+            } else {
+                currentFilteredQuestions = []; // No user logged in, no questions to show
+            }
+            currentPage = 1; // Reset to first page after filter
+            displayQuestionsForCurrentPage();
+        });
+
+        // Handle "Newest (Today)" filter button
+        newestFilterBtn.addEventListener('click', () => {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            currentFilteredQuestions = allQuestions.filter(question => {
+                return question.timestamp && question.timestamp.toDate() >= today;
+            });
+            currentPage = 1; // Reset to first page after filter
+            displayQuestionsForCurrentPage();
+        });
+
+        // Handle "Unanswered" filter button
+        unansweredFilterBtn.addEventListener('click', async () => {
+            questionsList.innerHTML = '<p class="text-gray-500 text-center">Filtering for unanswered questions...</p>';
+            // Since answerCount is now fetched with allQuestions, we can filter directly
+            currentFilteredQuestions = allQuestions.filter(question => question.answerCount === 0);
+            currentPage = 1; // Reset to first page after filter
+            displayQuestionsForCurrentPage();
+        });
+
+        // Pagination button event listeners
+        prevPageBtn.addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                displayQuestionsForCurrentPage();
             }
         });
 
-        // Handle Voting
-        async function handleVote(event, type) {
-            if (!currentUser) {
-                displayAnswerMessage("You must be logged in to vote.", "error");
-                return;
+        nextPageBtn.addEventListener('click', () => {
+            const totalPages = Math.ceil(currentFilteredQuestions.length / itemsPerPage);
+            if (currentPage < totalPages) {
+                currentPage++;
+                displayQuestionsForCurrentPage();
             }
+        });
 
-            const answerId = event.currentTarget.dataset.answerId;
-            const answerRef = doc(db, "answers", answerId);
-
-            try {
-                const answerSnap = await getDoc(answerRef);
-                if (!answerSnap.exists()) {
-                    displayAnswerMessage("Answer not found.", "error");
-                    return;
-                }
-
-                const answer = answerSnap.data();
-                let upvotes = answer.upvotes || [];
-                let downvotes = answer.downvotes || [];
-
-                const userId = currentUser.uid;
-
-                if (type === 'upvote') {
-                    if (upvotes.includes(userId)) {
-                        // Already upvoted, remove upvote
-                        upvotes = upvotes.filter(id => id !== userId);
-                    } else {
-                        // Add upvote, remove downvote if exists
-                        upvotes.push(userId);
-                        downvotes = downvotes.filter(id => id !== userId);
-                    }
-                } else if (type === 'downvote') {
-                    if (downvotes.includes(userId)) {
-                        // Already downvoted, remove downvote
-                        downvotes = downvotes.filter(id => id !== userId);
-                    } else {
-                        // Add downvote, remove upvote if exists
-                        downvotes.push(userId);
-                        upvotes = upvotes.filter(id => id !== userId);
-                    }
-                }
-
-                await updateDoc(answerRef, {
-                    upvotes: upvotes,
-                    downvotes: downvotes
-                });
-
-                await loadQuestionAndAnswers(currentQuestionId); // Reload answers to update vote counts
-            } catch (error) {
-                console.error("Error voting:", error);
-                displayAnswerMessage(`Error casting vote: ${error.message}`, "error");
-            }
-        }
-
-        // Handle Accept Answer
-        async function handleAcceptAnswer(event) {
-            if (!currentUser || currentUser.uid !== currentQuestionOwnerId) {
-                displayAnswerMessage("You are not authorized to accept this answer.", "error");
-                return;
-            }
-
-            const answerIdToAccept = event.currentTarget.dataset.answerId;
-
-            try {
-                // First, unaccept any previously accepted answers for this question
-                const existingAcceptedAnswersQuery = query(
-                    collection(db, "answers"),
-                    where("questionId", "==", currentQuestionId),
-                    where("accepted", "==", true)
-                );
-                const existingAcceptedSnap = await getDocsFromCollection(existingAcceptedAnswersQuery);
-                for (const docSnap of existingAcceptedSnap.docs) {
-                    await updateDoc(doc(db, "answers", docSnap.id), { accepted: false });
-                }
-
-                // Then, accept the selected answer
-                const answerRef = doc(db, "answers", answerIdToAccept);
-                await updateDoc(answerRef, { accepted: true });
-
-                displayAnswerMessage("Answer accepted successfully!", "success");
-                await loadQuestionAndAnswers(currentQuestionId); // Reload to show accepted state
-                // TODO: Implement notification for answer owner
-            } catch (error) {
-                console.error("Error accepting answer:", error);
-                displayAnswerMessage(`Error accepting answer: ${error.message}`, "error");
-            }
-        }
 
         // Placeholder for loading notification count
         function loadNotificationsCount(userId) {

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - Stackit</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5;
+        }
+        .odoo-navbar {
+            background-color: #4f46e5; /* Indigo-600 */
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .odoo-navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            transition: background-color 0.15s ease-in-out;
+        }
+        .odoo-navbar a:hover {
+            background-color: #4338ca; /* Indigo-700 */
+        }
+        .odoo-navbar .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .odoo-navbar .user-profile img {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: #a78bfa; /* Indigo-300 */
+        }
+        .odoo-card {
+            background-color: #ffffff;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            padding: 2rem;
+        }
+        .odoo-button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            font-weight: 500;
+            transition: all 0.15s ease-in-out;
+        }
+        .odoo-primary-button {
+            background-color: #4f46e5;
+            color: #ffffff;
+            border: 1px solid transparent;
+        }
+        .odoo-primary-button:hover {
+            background-color: #4338ca;
+        }
+        .odoo-secondary-button {
+            background-color: #e0e7ff;
+            color: #4f46e5;
+            border: 1px solid transparent;
+        }
+        .odoo-secondary-button:hover {
+            background-color: #c7d2fe;
+        }
+        .question-item, .answer-item {
+            background-color: #ffffff;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+        }
+        .question-item a, .answer-item a {
+            color: #4f46e5;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .question-item a:hover, .answer-item a:hover {
+            text-decoration: underline;
+        }
+        .tag {
+            display: inline-block;
+            background-color: #e0e7ff;
+            color: #4f46e5;
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+    <!-- Navigation Bar -->
+    <nav class="odoo-navbar">
+        <div class="text-2xl font-bold">Stackit</div>
+        <div class="flex items-center space-x-4">
+            <a href="user.html">Home</a>
+            <a href="ask_question.html" class="odoo-button odoo-secondary-button">Ask Question</a>
+            <a href="notifications.html" class="relative">
+                <i class="fas fa-bell"></i>
+                <span id="notification-count" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full px-1 py-0.5 hidden">0</span>
+            </a>
+            <div class="user-profile">
+                <a href="profile.html" class="flex items-center gap-0.5">
+                    <img src="https://placehold.co/32x32/6366f1/ffffff?text=U" alt="User Avatar">
+                    <span id="user-display-name">Loading...</span>
+                </a>
+                <button id="logout-button-nav" class="odoo-button odoo-secondary-button ml-2">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow container mx-auto p-4">
+        <div class="odoo-card mx-auto max-w-3xl text-center mb-6">
+            <img id="profile-pic" src="https://placehold.co/100x100/6366f1/ffffff?text=User" alt="Profile Picture" class="rounded-full mx-auto mb-4">
+            <h1 id="profile-name" class="text-3xl font-bold text-gray-800 mb-2">Loading Name...</h1>
+            <p id="profile-email" class="text-gray-600 mb-4">Loading Email...</p>
+            <button id="logout-button-profile" class="odoo-button odoo-primary-button">Logout</button>
+        </div>
+
+        <div class="odoo-card">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">My Questions</h2>
+            <div id="my-questions-list" class="space-y-4">
+                <p class="text-gray-500">Loading questions...</p>
+            </div>
+        </div>
+
+        <!-- Removed "My Answers" Section -->
+    </main>
+
+    <!-- Firebase SDKs -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, query, where, orderBy, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBlmC_4Td49uysEm2u8oi_4wSkCaULSHTY",
+  authDomain: "oddohack.firebaseapp.com",
+  projectId: "oddohack",
+  storageBucket: "oddohack.firebasestorage.app",
+  messagingSenderId: "1083386693457",
+  appId: "1:1083386693457:web:e1129b47cacf62e4c0f570",
+  measurementId: "G-29VWYY28TB"
+        };
+
+        // Initialize Firebase
+        let app;
+        let auth;
+        let db;
+        let currentUser = null;
+
+        try {
+            app = initializeApp(firebaseConfig);
+            auth = getAuth(app);
+            db = getFirestore(app);
+        } catch (error) {
+            console.error("Firebase initialization error:", error);
+            alert("Firebase initialization failed. Check console for details and ensure config is correct.");
+        }
+
+        const userDisplayNameElement = document.getElementById('user-display-name');
+        const logoutButtonNav = document.getElementById('logout-button-nav');
+        const logoutButtonProfile = document.getElementById('logout-button-profile');
+        const profileNameElement = document.getElementById('profile-name');
+        const profileEmailElement = document.getElementById('profile-email');
+        const profilePicElement = document.getElementById('profile-pic');
+        const myQuestionsList = document.getElementById('my-questions-list');
+        const notificationCount = document.getElementById('notification-count');
+
+        // Authenticate user and load data
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                currentUser = user;
+                userDisplayNameElement.textContent = user.email || 'User';
+                profileNameElement.textContent = user.displayName || user.email || 'User';
+                profileEmailElement.textContent = user.email || 'N/A';
+                
+                await loadMyQuestions(user.uid);
+                // loadNotificationsCount(user.uid); // Placeholder for notification count
+            } else {
+                // User is signed out, redirect to login page
+                window.location.href = 'login.html';
+            }
+        });
+
+        // Handle Logout (from navbar and profile page button)
+        const handleLogout = async () => {
+            if (auth) {
+                try {
+                    await signOut(auth);
+                    window.location.href = 'user.html'; // Redirect to user.html as requested
+                } catch (error) {
+                    console.error("Logout error:", error);
+                    alert(`Logout failed: ${error.message}`);
+                }
+            }
+        };
+        logoutButtonNav.addEventListener('click', handleLogout);
+        logoutButtonProfile.addEventListener('click', handleLogout);
+
+        // Function to load questions posted by the current user
+        async function loadMyQuestions(userId) {
+            myQuestionsList.innerHTML = '<p class="text-gray-500">Loading your questions...</p>';
+            try {
+                const q = query(
+                    collection(db, "questions"),
+                    where("userId", "==", userId),
+                    orderBy("timestamp", "desc")
+                );
+                const querySnapshot = await getDocs(q);
+                myQuestionsList.innerHTML = ''; // Clear loading message
+
+                if (querySnapshot.empty) {
+                    myQuestionsList.innerHTML = '<p class="text-gray-500">You haven\'t posted any questions yet.</p>';
+                    return;
+                }
+
+                querySnapshot.forEach((docSnap) => {
+                    const question = docSnap.data();
+                    const questionId = docSnap.id;
+                    const tagsHtml = (question.tags || []).map(tag => `<span class="tag">${tag}</span>`).join('');
+                    const questionHtml = `
+                        <div class="question-item">
+                            <a href="question_detail.html?id=${questionId}" class="text-xl">${question.title}</a>
+                            <p class="text-gray-600 text-sm mt-2">${question.description.substring(0, 100)}...</p>
+                            <div class="flex flex-wrap items-center mt-3">
+                                ${tagsHtml}
+                                <span class="text-gray-500 text-xs ml-auto">Posted on ${question.timestamp ? new Date(question.timestamp.toDate()).toLocaleDateString() : 'N/A'}</span>
+                            </div>
+                        </div>
+                    `;
+                    myQuestionsList.innerHTML += questionHtml;
+                });
+            } catch (error) {
+                console.error("Error loading user questions:", error);
+                myQuestionsList.innerHTML = '<p class="text-red-500">Error loading your questions.</p>';
+            }
+        }
+
+        // Placeholder for loading notification count
+        function loadNotificationsCount(userId) {
+            // In a real app, you would query Firestore for unread notifications for this userId
+            // For now, let's just show a static number or hide it
+            // notificationCount.textContent = '5'; // Example
+            // notificationCount.classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>

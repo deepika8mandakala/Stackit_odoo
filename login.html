@@ -3,117 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ask a Question - Stackit</title>
+    <title>Login / Sign Up - Stackit</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f0f2f5;
-        }
-        .odoo-navbar {
-            background-color: #714b67; /* Indigo-600 */
-            color: white;
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        .odoo-navbar a {
-            color: white;
-            text-decoration: none;
-            padding: 0.5rem 1rem;
-            border-radius: 0.375rem;
-            transition: background-color 0.15s ease-in-out;
-        }
-        .odoo-navbar a:hover {
-            background-color: #714b67; /* Indigo-700 */
-        }
-        .odoo-navbar .user-profile {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .odoo-navbar .user-profile img {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background-color: #714b67; /* Indigo-300 */
+            background-color: #f0f2f5; /* Light gray background */
         }
         .odoo-card {
             background-color: #ffffff;
-            border-radius: 0.5rem;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            padding: 2rem;
+            border-radius: 0.5rem; /* Equivalent to rounded-xl */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* Equivalent to shadow-lg */
+            padding: 2rem; /* Equivalent to p-8 */
+            width: 100%;
+            max-width: 448px; /* max-w-md */
         }
         .odoo-input {
-            border: 1px solid #d1d5db;
-            border-radius: 0.375rem;
-            padding: 0.5rem 1rem;
+            border: 1px solid #d1d5db; /* border-gray-300 */
+            border-radius: 0.375rem; /* rounded-md */
+            padding: 0.5rem 1rem; /* py-2 px-4 */
             width: 100%;
-            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* shadow-sm */
         }
         .odoo-button {
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 0.5rem 1rem;
-            border-radius: 0.375rem;
-            font-weight: 500;
-            transition: all 0.15s ease-in-out;
+            padding: 0.5rem 1rem; /* py-2 px-4 */
+            border-radius: 0.375rem; /* rounded-md */
+            font-weight: 500; /* font-medium */
+            transition: all 0.15s ease-in-out; /* transition duration-150 ease-in-out */
         }
         .odoo-primary-button {
-<<<<<<< HEAD
-            background-color: #714b67;
-            color: #ffffff;
-            border: 1px solid transparent;
-        }
-        .odoo-primary-button:hover {
-            background-color: #714b67;
-        }
-        .odoo-secondary-button {
-            background-color: #e0e7ff;
-            color: #714b67;
-=======
-            background-color: #714b67; /* bg-indigo-600 */
+            background-color: #e546cb; /* bg-indigo-600 */
             color: #ffffff; /* text-white */
             border: 1px solid transparent;
         }
         .odoo-primary-button:hover {
-            background-color: #714b67; /* hover:bg-indigo-700 */
+            background-color: #ca38c0; /* hover:bg-indigo-700 */
         }
         .odoo-secondary-button {
             background-color: #e0e7ff; /* bg-indigo-100 */
-            color: #714b67; /* text-indigo-600 */
->>>>>>> 57b3d79 (added)
+            color: #e046e5; /* text-indigo-600 */
             border: 1px solid transparent;
         }
         .odoo-secondary-button:hover {
-            background-color: #c7d2fe;
+            background-color: #c7d2fe; /* hover:bg-indigo-200 */
         }
-<<<<<<< HEAD
-        /* For rich text editor placeholder */
-        .rich-text-editor-placeholder {
-            border: 1px solid #d1d5db;
-            border-radius: 0.375rem;
-            padding: 0.5rem 1rem;
-            min-height: 150px;
-            background-color: #f9fafb;
-            color: #6b7280;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            font-style: italic;
-=======
         .odoo-text-link {
-            color:#714b67; /* text-indigo-600 */
+            color: #d046e5; /* text-indigo-600 */
             font-weight: 500; /* font-medium */
         }
         .odoo-text-link:hover {
-            color:#714b67; /* hover:text-indigo-800 */
+            color: #a3309f; /* hover:text-indigo-800 */
         }
         .message-success {
             background-color: #dcfce7; /* bg-green-100 */
@@ -130,88 +73,79 @@
             border-radius: 0.375rem; /* rounded-md */
             margin-bottom: 1rem; /* mb-4 */
             font-size: 0.875rem; /* text-sm */
->>>>>>> 57b3d79 (added)
         }
     </style>
 </head>
-<body class="flex flex-col min-h-screen">
-    <!-- Navigation Bar -->
-    <nav class="odoo-navbar">
-        <div class="text-2xl font-bold">Stackit</div>
-        <div class="flex items-center space-x-4">
-            <a href="user.html">Home</a>
-            <a href="ask_question.html" class="odoo-button odoo-secondary-button">Ask Question</a>
-            <a href="notifications.html" class="relative">
-                <i class="fas fa-bell"></i>
-                <span id="notification-count" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full px-1 py-0.5 hidden">0</span>
-            </a>
-            <div class="user-profile">
-                <img src="https://placehold.co/32x32/6366f1/ffffff?text=U" alt="User Avatar">
-                <span id="user-display-name">Loading...</span>
-                <button id="logout-button" class="odoo-button odoo-secondary-button ml-2">Logout</button>
+<body class="min-h-screen flex items-center justify-center">
+    <div class="odoo-card">
+        <h2 id="form-title" class="text-3xl font-bold text-center text-gray-800 mb-6">Login</h2>
+
+        <div id="message-box" class="hidden"></div>
+
+        <form id="auth-form" class="space-y-5">
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                <input
+                    type="email"
+                    id="email"
+                    class="odoo-input focus:ring-indigo-500 focus:border-indigo-500"
+                    placeholder="e.g., user@example.com"
+                    required
+                    autocomplete="off"
+                />
             </div>
-        </div>
-    </nav>
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                <input
+                    type="password"
+                    id="password"
+                    class="odoo-input focus:ring-indigo-500 focus:border-indigo-500"
+                    placeholder="Enter your password"
+                    required
+                    autocomplete="new-password"
+                />
+            </div>
+            <button
+                type="submit"
+                id="submit-button"
+                class="odoo-button odoo-primary-button w-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+                Login
+            </button>
+        </form>
 
-    <!-- Main Content -->
-    <main class="flex-grow container mx-auto p-4">
-        <div class="odoo-card mx-auto max-w-2xl">
-            <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">Ask a New Question</h1>
-
-            <form id="ask-question-form" class="space-y-5">
-                <div>
-                    <label for="question-title" class="block text-sm font-medium text-gray-700 mb-1">Title</label>
-                    <input
-                        type="text"
-                        id="question-title"
-                        class="odoo-input focus:ring-indigo-500 focus:border-indigo-500"
-                        placeholder="Short and descriptive title"
-                        required
-                    />
-                </div>
-                <div>
-                    <label for="question-description" class="block text-sm font-medium text-gray-700 mb-1">Description</label>
-                    <!-- Placeholder for Rich Text Editor -->
-                    <textarea
-                        id="question-description"
-                        class="odoo-input h-40 resize-y focus:ring-indigo-500 focus:border-indigo-500"
-                        placeholder="Write your question details here..."
-                        required
-                    ></textarea>
-                    <p class="text-sm text-gray-500 mt-1">
-                        * For a rich text editor (bold, italic, lists, etc.), integrate a library like Quill.js or TinyMCE here.
-                    </p>
-                </div>
-                <div>
-                    <label for="question-tags" class="block text-sm font-medium text-gray-700 mb-1">Tags (comma-separated)</label>
-                    <input
-                        type="text"
-                        id="question-tags"
-                        class="odoo-input focus:ring-indigo-500 focus:border-indigo-500"
-                        placeholder="e.g., React, JavaScript, Firebase, CSS"
-                    />
-                    <p class="text-sm text-gray-500 mt-1">Separate tags with commas.</p>
-                </div>
-                <button
-                    type="submit"
-                    id="submit-question-button"
-                    class="odoo-button odoo-primary-button w-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                >
-                    Submit Question
-                </button>
-            </form>
-            <div id="message-box" class="mt-4 hidden"></div>
+        <div class="mt-6 text-center">
+            <button
+                id="toggle-auth-mode"
+                class="odoo-text-link focus:outline-none"
+            >
+                Need an account? Sign Up
+            </button>
         </div>
-    </main>
+        <div class="mt-4 text-center">
+            <button
+                id="back-to-home-button"
+                class="odoo-text-link focus:outline-none"
+            >
+                ← Back to Home
+            </button>
+        </div>
+    </div>
 
     <!-- Firebase SDKs -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import {
+            getAuth,
+            signInWithEmailAndPassword,
+            createUserWithEmailAndPassword,
+            onAuthStateChanged,
+        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // Your web app's Firebase configuration
         // IMPORTANT: Replace these placeholder values with your actual Firebase project configuration.
+        // You can find these in your Firebase console under Project settings -> Your apps -> Web app -> Config.
         const firebaseConfig = {
             apiKey: "AIzaSyBlmC_4Td49uysEm2u8oi_4wSkCaULSHTY",
   authDomain: "oddohack.firebaseapp.com",
@@ -219,14 +153,13 @@
   storageBucket: "oddohack.firebasestorage.app",
   messagingSenderId: "1083386693457",
   appId: "1:1083386693457:web:e1129b47cacf62e4c0f570",
-  measurementId: "G-29VWYY28TB"
+  measurementId: "G-29VWYY28TB" // e.g., "G-ABC123DEF4" (optional, if using Analytics)
         };
 
         // Initialize Firebase
         let app;
         let auth;
         let db;
-        let currentUser = null; // To store the current authenticated user
 
         try {
             app = initializeApp(firebaseConfig);
@@ -234,96 +167,138 @@
             db = getFirestore(app);
         } catch (error) {
             console.error("Firebase initialization error:", error);
-            alert("Firebase initialization failed. Check console for details and ensure config is correct.");
+            displayMessage("Firebase initialization failed. Check console for details and ensure config is correct.", "error");
         }
 
-        const userDisplayNameElement = document.getElementById('user-display-name');
-        const logoutButton = document.getElementById('logout-button');
-        const askQuestionForm = document.getElementById('ask-question-form');
-        const questionTitleInput = document.getElementById('question-title');
-        const questionDescriptionInput = document.getElementById('question-description');
-        const questionTagsInput = document.getElementById('question-tags');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const authForm = document.getElementById('auth-form');
+        const formTitle = document.getElementById('form-title');
+        const submitButton = document.getElementById('submit-button');
+        const toggleAuthModeButton = document.getElementById('toggle-auth-mode');
+        const backToHomeButton = document.getElementById('back-to-home-button');
         const messageBox = document.getElementById('message-box');
-        const notificationCount = document.getElementById('notification-count');
+
+        let isLoginMode = true; // true for login, false for signup
 
         // Function to display messages
         function displayMessage(msg, type = "success") {
             messageBox.textContent = msg;
-            messageBox.className = `mt-4 p-3 rounded-md text-sm ${type === "success" ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"}`;
+            messageBox.className = `p-3 mb-4 rounded-md text-sm ${type === "success" ? "message-success" : "message-error"}`;
             messageBox.classList.remove('hidden');
         }
 
-        // Authenticate user
+        // Function to hide messages
+        function hideMessage() {
+            messageBox.classList.add('hidden');
+            messageBox.textContent = '';
+        }
+
+        // Listen for authentication state changes
+        // This handles automatic redirection if a user is already logged in
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                currentUser = user; // Store the user object
-                userDisplayNameElement.textContent = user.email || 'User';
-                // loadNotificationsCount(user.uid); // Placeholder for notification count
+                // User is signed in, redirect to user.html
+                window.location.href = 'user.html';
             } else {
-                // User is signed out, redirect to login page
-                window.location.href = 'login.html';
+                // User is signed out or not yet signed in.
+                // Keep on this page to allow login/signup.
             }
         });
 
-        // Handle Logout
-        logoutButton.addEventListener('click', async () => {
-            if (auth) {
-                try {
-                    await signOut(auth);
-                    window.location.href = 'index.html'; // Redirect to index.html after logout
-                } catch (error) {
-                    console.error("Logout error:", error);
-                    alert(`Logout failed: ${error.message}`);
-                }
-            }
-        });
-
-        // Handle form submission
-        askQuestionForm.addEventListener('submit', async (e) => {
+        // Handle form submission (Login or Signup)
+        authForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            messageBox.classList.add('hidden'); // Hide previous messages
+            hideMessage();
 
-            if (!currentUser) {
-                displayMessage("You must be logged in to ask a question.", "error");
+            const email = emailInput.value;
+            const password = passwordInput.value;
+
+            if (!auth) {
+                displayMessage("Firebase authentication is not available.", "error");
                 return;
             }
 
-            const title = questionTitleInput.value.trim();
-            const description = questionDescriptionInput.value.trim();
-            const tags = questionTagsInput.value.split(',').map(tag => tag.trim()).filter(tag => tag !== '');
-
-            if (!title || !description) {
-                displayMessage("Please fill in both title and description.", "error");
+            // Basic validation to ensure fields are not empty
+            if (!email || !password) {
+                displayMessage("Please enter both email and password.", "error");
                 return;
             }
 
             try {
-                await addDoc(collection(db, "questions"), {
-                    title: title,
-                    description: description,
-                    tags: tags,
-                    userId: currentUser.uid,
-                    userName: currentUser.email || 'Anonymous', // Use email as display name for now
-                    timestamp: serverTimestamp()
-                });
-
-                displayMessage("Question submitted successfully!", "success");
-                askQuestionForm.reset(); // Clear the form
-                // Optionally, redirect to the user dashboard or the new question's detail page
-                // setTimeout(() => { window.location.href = 'user.html'; }, 2000);
+                if (isLoginMode) {
+                    // Login
+                    await signInWithEmailAndPassword(auth, email, password);
+                    displayMessage('Login successful! Redirecting...', 'success');
+                    // Redirection handled by onAuthStateChanged listener
+                } else {
+                    // Signup
+                    await createUserWithEmailAndPassword(auth, email, password);
+                    displayMessage('Signup successful! Please log in.', 'success');
+                    isLoginMode = true; // Switch to login view after successful signup
+                    updateUI();
+                }
             } catch (error) {
-                console.error("Error adding document: ", error);
-                displayMessage(`Error submitting question: ${error.message}`, "error");
+                console.error("Authentication error:", error);
+                let errorMessage = "An unknown error occurred.";
+                switch (error.code) {
+                    case 'auth/invalid-email':
+                        errorMessage = 'Invalid email address.';
+                        break;
+                    case 'auth/user-disabled':
+                        errorMessage = 'User account has been disabled.';
+                        break;
+                    case 'auth/user-not-found':
+                        errorMessage = 'No user found with this email.';
+                        break;
+                    case 'auth/wrong-password':
+                        errorMessage = 'Incorrect password.';
+                        break;
+                    case 'auth/email-already-in-use':
+                        errorMessage = 'This email is already in use.';
+                        break;
+                    case 'auth/weak-password':
+                        errorMessage = 'Password should be at least 6 characters.';
+                        break;
+                    default:
+                        errorMessage = `Authentication failed: ${error.message}`;
+                        break;
+                }
+                displayMessage(errorMessage, 'error');
             }
         });
 
-        // Placeholder for loading notification count
-        function loadNotificationsCount(userId) {
-            // In a real app, you would query Firestore for unread notifications for this userId
-            // For now, let's just show a static number or hide it
-            // notificationCount.textContent = '5'; // Example
-            // notificationCount.classList.remove('hidden');
+        // Toggle between Login and Signup modes
+        toggleAuthModeButton.addEventListener('click', () => {
+            isLoginMode = !isLoginMode;
+            updateUI();
+            hideMessage(); // Clear messages when switching mode
+        });
+
+        // Handle Back to Home button
+        backToHomeButton.addEventListener('click', () => {
+            window.location.href = 'index.html';
+        });
+
+        // Update UI based on current mode (Login/Signup)
+        function updateUI() {
+            if (isLoginMode) {
+                formTitle.textContent = 'Login';
+                submitButton.textContent = 'Login';
+                toggleAuthModeButton.textContent = 'Need an account? Sign Up';
+            } else {
+                formTitle.textContent = 'Sign Up';
+                submitButton.textContent = 'Sign Up';
+                toggleAuthModeButton.textContent = 'Already have an account? Login';
+            }
+            emailInput.value = '';
+            passwordInput.value = '';
         }
+
+        // Initial UI update. onAuthStateChanged will handle redirection if already logged in.
+        window.onload = () => {
+            updateUI();
+        };
     </script>
 </body>
 </html>

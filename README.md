@@ -10,6 +10,7 @@
 |------------------------|----------------------------------------|
 | Manadakal Sai Deepika | mandakaladeepika@gmail.com             |
 | Dasireddy Chaitanya   | daisreddychaitanya@gmail.com           |
-
+| Nalluri Ruchira       | ruchiranalluri@gmail.com               |
+| Gedela Satya mohan    | satyamohan221@gmail.com                |
 
 

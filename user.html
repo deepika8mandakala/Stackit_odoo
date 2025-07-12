@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stackit - Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5;
+        }
+        .odoo-navbar {
+            background-color: #4f46e5; /* Indigo-600 */
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .odoo-navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            transition: background-color 0.15s ease-in-out;
+        }
+        .odoo-navbar a:hover {
+            background-color: #4338ca; /* Indigo-700 */
+        }
+        .odoo-navbar .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .odoo-navbar .user-profile img {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: #a78bfa; /* Indigo-300 */
+        }
+        .odoo-card {
+            background-color: #ffffff;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            padding: 2rem;
+        }
+        .odoo-button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            font-weight: 500;
+            transition: all 0.15s ease-in-out;
+        }
+        .odoo-primary-button {
+            background-color: #4f46e5;
+            color: #ffffff;
+            border: 1px solid transparent;
+        }
+        .odoo-primary-button:hover {
+            background-color: #4338ca;
+        }
+        .odoo-secondary-button {
+            background-color: #e0e7ff;
+            color: #4f46e5;
+            border: 1px solid transparent;
+        }
+        .odoo-secondary-button:hover {
+            background-color: #c7d2fe;
+        }
+        .question-item {
+            background-color: #ffffff;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            transition: transform 0.1s ease-in-out;
+        }
+        .question-item:hover {
+            transform: translateY(-2px);
+        }
+        .question-item a {
+            color: #4f46e5;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .question-item a:hover {
+            text-decoration: underline;
+        }
+        .tag {
+            display: inline-block;
+            background-color: #e0e7ff;
+            color: #4f46e5;
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .search-input {
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+            padding: 0.5rem 1rem;
+            width: 100%;
+            max-width: 300px; /* Adjust as needed */
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+    <!-- Navigation Bar -->
+    <nav class="odoo-navbar">
+        <div class="text-2xl font-bold">Stackit</div>
+        <div class="flex items-center space-x-4">
+            <a href="user.html">Home</a>
+            <a href="ask_question.html" class="odoo-button odoo-secondary-button">Ask Question</a>
+            <a href="notifications.html" class="relative">
+                <i class="fas fa-bell"></i>
+                <span id="notification-count" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full px-1 py-0.5 hidden">0</span>
+            </a>
+            <div class="user-profile">
+                <a href="profile.html" class="flex items-center gap-0.5">
+                    <img src="https://placehold.co/32x32/6366f1/ffffff?text=U" alt="User Avatar">
+                    <span id="user-display-name">Loading...</span>
+                </a>
+                <button id="logout-button" class="odoo-button odoo-secondary-button ml-2">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow container mx-auto p-4">
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-3xl font-bold text-gray-800">Recent Questions</h1>
+            <div class="flex space-x-2 items-center">
+                <input type="text" id="search-input" class="search-input" placeholder="Search questions...">
+                <button id="newest-filter-btn" class="odoo-button odoo-secondary-button">Newest (Today)</button>
+                <button id="unanswered-filter-btn" class="odoo-button odoo-secondary-button">Unanswered</button>
+                <!-- Removed Filters/Tags dropdown -->
+            </div>
+        </div>
+
+        <div id="questions-list" class="space-y-4">
+            <!-- Questions will be loaded here by JavaScript -->
+            <p class="text-gray-500 text-center">Loading questions...</p>
+        </div>
+
+        <!-- Pagination Controls -->
+        <div id="pagination-controls" class="flex justify-center items-center mt-6 space-x-4">
+            <button id="prev-page-btn" class="odoo-button odoo-secondary-button" disabled>Previous</button>
+            <span id="page-info" class="text-gray-700">Page 1 of 1</span>
+            <button id="next-page-btn" class="odoo-button odoo-secondary-button" disabled>Next</button>
+        </div>
+    </main>
+
+    <!-- Firebase SDKs -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, query, orderBy, getDocs, where } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Your web app's Firebase configuration
+        // IMPORTANT: Replace these placeholder values with your actual Firebase project configuration.
+        const firebaseConfig = {
+            apiKey: "AIzaSyBlmC_4Td49uysEm2u8oi_4wSkCaULSHTY",
+  authDomain: "oddohack.firebaseapp.com",
+  projectId: "oddohack",
+  storageBucket: "oddohack.firebasestorage.app",
+  messagingSenderId: "1083386693457",
+  appId: "1:1083386693457:web:e1129b47cacf62e4c0f570",
+  measurementId: "G-29VWYY28TB"
+        };
+
+        // Initialize Firebase
+        let app;
+        let auth;
+        let db;
+        let allQuestions = []; // Store all questions for client-side filtering
+        let currentPage = 1;
+        const itemsPerPage = 10; // Display 2 questions per page
+        let currentFilteredQuestions = []; // Store questions after search/filter for pagination
+
+
+        try {
+            app = initializeApp(firebaseConfig);
+            auth = getAuth(app);
+            db = getFirestore(app);
+        } catch (error) {
+            console.error("Firebase initialization error:", error);
+            alert("Firebase initialization failed. Check console for details and ensure config is correct.");
+        }
+
+        const userDisplayNameElement = document.getElementById('user-display-name');
+        const logoutButton = document.getElementById('logout-button');
+        const questionsList = document.getElementById('questions-list');
+        const notificationCount = document.getElementById('notification-count');
+        const searchInput = document.getElementById('search-input');
+        const newestFilterBtn = document.getElementById('newest-filter-btn');
+        const unansweredFilterBtn = document.getElementById('unanswered-filter-btn');
+        const prevPageBtn = document.getElementById('prev-page-btn');
+        const nextPageBtn = document.getElementById('next-page-btn');
+        const pageInfoSpan = document.getElementById('page-info');
+
+
+        // Authenticate user and load data
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                // User is signed in
+                userDisplayNameElement.textContent = user.email || 'User'; // Display user email
+                await loadAllQuestions(); // Load all questions initially
+                // loadNotificationsCount(user.uid); // Placeholder for notification count
+            } else {
+                // User is signed out, redirect to login page
+                window.location.href = 'login.html';
+            }
+        });
+
+        // Handle Logout
+        logoutButton.addEventListener('click', async () => {
+            if (auth) {
+                try {
+                    await signOut(auth);
+                    window.location.href = 'index.html'; // Redirect to index.html after logout
+                } catch (error) {
+                    console.error("Logout error:", error);
+                    alert(`Logout failed: ${error.message}`);
+                }
+            }
+        });
+
+        // Function to load ALL questions from Firestore (for client-side filtering)
+        async function loadAllQuestions() {
+            questionsList.innerHTML = '<p class="text-gray-500 text-center">Loading questions...</p>';
+            try {
+                // Fetch all questions. For very large datasets, consider pagination.
+                const q = query(collection(db, "questions"), orderBy("timestamp", "desc"));
+                const querySnapshot = await getDocs(q);
+                
+                allQuestions = []; // Clear previous questions
+                for (const doc of querySnapshot.docs) {
+                    const questionData = { id: doc.id, ...doc.data() };
+                    // Fetch answer count for each question
+                    const answersQuery = query(collection(db, "answers"), where("questionId", "==", questionData.id));
+                    const answersSnap = await getDocs(answersQuery);
+                    questionData.answerCount = answersSnap.size; // Add answerCount to question object
+                    allQuestions.push(questionData);
+                }
+                
+                currentFilteredQuestions = [...allQuestions]; // Initially, all questions are filtered
+                currentPage = 1; // Reset to first page
+                displayQuestionsForCurrentPage(); // Display questions for the current page
+            } catch (error) {
+                console.error("Error loading questions:", error);
+                questionsList.innerHTML = '<p class="text-red-500 text-center">Error loading questions. Please try again.</p>';
+            }
+        }
+
+        // Function to display questions for the current page
+        function displayQuestionsForCurrentPage() {
+            questionsList.innerHTML = ''; // Clear current list
+
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const questionsToDisplay = currentFilteredQuestions.slice(startIndex, endIndex);
+
+            if (questionsToDisplay.length === 0) {
+                questionsList.innerHTML = '<p class="text-gray-500 text-center">No questions found matching your criteria.</p>';
+                updatePaginationControls(0, 0); // Update controls for no items
+                return;
+            }
+
+            questionsToDisplay.forEach((question) => {
+                const tagsHtml = (question.tags || []).map(tag => `<span class="tag">${tag}</span>`).join(''); // Ensure tags is an array
+                const questionHtml = `
+                    <div class="question-item">
+                        <h3 class="text-xl font-semibold text-gray-800">${question.title}</h3>
+                        <p class="text-gray-600 text-sm mt-2">${question.description.substring(0, 150)}...</p>
+                        <div class="flex flex-wrap items-center mt-3">
+                            ${tagsHtml}
+                            <span class="text-gray-500 text-xs ml-auto">Asked by ${question.userName || 'Anonymous'} on ${question.timestamp ? new Date(question.timestamp.toDate()).toLocaleDateString() : 'N/A'}</span>
+                        </div>
+                        <div class="mt-4 flex justify-between items-center">
+                            <span class="text-gray-700 text-sm font-medium">Answers: ${question.answerCount !== undefined ? question.answerCount : 'N/A'}</span>
+                            <a href="question_detail.html?id=${question.id}" class="odoo-button odoo-secondary-button inline-flex items-center text-sm">
+                                View Answers <i class="fas fa-arrow-right ml-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                `;
+                questionsList.innerHTML += questionHtml;
+            });
+
+            updatePaginationControls(currentFilteredQuestions.length, itemsPerPage);
+        }
+
+        // Function to update pagination controls
+        function updatePaginationControls(totalItems, itemsPerPage) {
+            const totalPages = Math.ceil(totalItems / itemsPerPage);
+            pageInfoSpan.textContent = `Page ${currentPage} of ${totalPages === 0 ? 1 : totalPages}`;
+            prevPageBtn.disabled = currentPage === 1;
+            nextPageBtn.disabled = currentPage === totalPages || totalPages === 0;
+        }
+
+        // Handle search input
+        searchInput.addEventListener('input', () => {
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            if (searchTerm === '') {
+                currentFilteredQuestions = [...allQuestions];
+            } else {
+                currentFilteredQuestions = allQuestions.filter(question => {
+                    const titleMatch = question.title.toLowerCase().includes(searchTerm);
+                    const descriptionMatch = question.description.toLowerCase().includes(searchTerm);
+                    // Ensure tags exist and are an array before calling .some()
+                    const tagsMatch = Array.isArray(question.tags) && question.tags.some(tag => tag.toLowerCase().includes(searchTerm));
+                    return titleMatch || descriptionMatch || tagsMatch;
+                });
+            }
+            currentPage = 1; // Reset to first page after search
+            displayQuestionsForCurrentPage();
+        });
+
+        // Handle "Newest (Today)" filter button
+        newestFilterBtn.addEventListener('click', () => {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            currentFilteredQuestions = allQuestions.filter(question => {
+                return question.timestamp && question.timestamp.toDate() >= today;
+            });
+            currentPage = 1; // Reset to first page after filter
+            displayQuestionsForCurrentPage();
+        });
+
+        // Handle "Unanswered" filter button
+        unansweredFilterBtn.addEventListener('click', async () => {
+            questionsList.innerHTML = '<p class="text-gray-500 text-center">Filtering for unanswered questions...</p>';
+            // Since answerCount is now fetched with allQuestions, we can filter directly
+            currentFilteredQuestions = allQuestions.filter(question => question.answerCount === 0);
+            currentPage = 1; // Reset to first page after filter
+            displayQuestionsForCurrentPage();
+        });
+
+        // Pagination button event listeners
+        prevPageBtn.addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                displayQuestionsForCurrentPage();
+            }
+        });
+
+        nextPageBtn.addEventListener('click', () => {
+            const totalPages = Math.ceil(currentFilteredQuestions.length / itemsPerPage);
+            if (currentPage < totalPages) {
+                currentPage++;
+                displayQuestionsForCurrentPage();
+            }
+        });
+
+
+        // Placeholder for loading notification count
+        function loadNotificationsCount(userId) {
+            // In a real app, you would query Firestore for unread notifications for this userId
+            // For now, let's just show a static number or hide it
+            // notificationCount.textContent = '5'; // Example
+            // notificationCount.classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>

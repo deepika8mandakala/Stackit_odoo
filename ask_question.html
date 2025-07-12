@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ask a Question - Stackit</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5;
+        }
+        .odoo-navbar {
+            background-color: #4f46e5; /* Indigo-600 */
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .odoo-navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            transition: background-color 0.15s ease-in-out;
+        }
+        .odoo-navbar a:hover {
+            background-color: #4338ca; /* Indigo-700 */
+        }
+        .odoo-navbar .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .odoo-navbar .user-profile img {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: #a78bfa; /* Indigo-300 */
+        }
+        .odoo-card {
+            background-color: #ffffff;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            padding: 2rem;
+        }
+        .odoo-input {
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+            padding: 0.5rem 1rem;
+            width: 100%;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        }
+        .odoo-button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            font-weight: 500;
+            transition: all 0.15s ease-in-out;
+        }
+        .odoo-primary-button {
+            background-color: #4f46e5;
+            color: #ffffff;
+            border: 1px solid transparent;
+        }
+        .odoo-primary-button:hover {
+            background-color: #4338ca;
+        }
+        .odoo-secondary-button {
+            background-color: #e0e7ff;
+            color: #4f46e5;
+            border: 1px solid transparent;
+        }
+        .odoo-secondary-button:hover {
+            background-color: #c7d2fe;
+        }
+        /* For rich text editor placeholder */
+        .rich-text-editor-placeholder {
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+            padding: 0.5rem 1rem;
+            min-height: 150px;
+            background-color: #f9fafb;
+            color: #6b7280;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+    <!-- Navigation Bar -->
+    <nav class="odoo-navbar">
+        <div class="text-2xl font-bold">Stackit</div>
+        <div class="flex items-center space-x-4">
+            <a href="user.html">Home</a>
+            <a href="ask_question.html" class="odoo-button odoo-secondary-button">Ask Question</a>
+            <a href="notifications.html" class="relative">
+                <i class="fas fa-bell"></i>
+                <span id="notification-count" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full px-1 py-0.5 hidden">0</span>
+            </a>
+            <div class="user-profile">
+                <img src="https://placehold.co/32x32/6366f1/ffffff?text=U" alt="User Avatar">
+                <span id="user-display-name">Loading...</span>
+                <button id="logout-button" class="odoo-button odoo-secondary-button ml-2">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow container mx-auto p-4">
+        <div class="odoo-card mx-auto max-w-2xl">
+            <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">Ask a New Question</h1>
+
+            <form id="ask-question-form" class="space-y-5">
+                <div>
+                    <label for="question-title" class="block text-sm font-medium text-gray-700 mb-1">Title</label>
+                    <input
+                        type="text"
+                        id="question-title"
+                        class="odoo-input focus:ring-indigo-500 focus:border-indigo-500"
+                        placeholder="Short and descriptive title"
+                        required
+                    />
+                </div>
+                <div>
+                    <label for="question-description" class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                    <!-- Placeholder for Rich Text Editor -->
+                    <textarea
+                        id="question-description"
+                        class="odoo-input h-40 resize-y focus:ring-indigo-500 focus:border-indigo-500"
+                        placeholder="Write your question details here..."
+                        required
+                    ></textarea>
+                    <p class="text-sm text-gray-500 mt-1">
+                        * For a rich text editor (bold, italic, lists, etc.), integrate a library like Quill.js or TinyMCE here.
+                    </p>
+                </div>
+                <div>
+                    <label for="question-tags" class="block text-sm font-medium text-gray-700 mb-1">Tags (comma-separated)</label>
+                    <input
+                        type="text"
+                        id="question-tags"
+                        class="odoo-input focus:ring-indigo-500 focus:border-indigo-500"
+                        placeholder="e.g., React, JavaScript, Firebase, CSS"
+                    />
+                    <p class="text-sm text-gray-500 mt-1">Separate tags with commas.</p>
+                </div>
+                <button
+                    type="submit"
+                    id="submit-question-button"
+                    class="odoo-button odoo-primary-button w-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                >
+                    Submit Question
+                </button>
+            </form>
+            <div id="message-box" class="mt-4 hidden"></div>
+        </div>
+    </main>
+
+    <!-- Firebase SDKs -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Your web app's Firebase configuration
+        // IMPORTANT: Replace these placeholder values with your actual Firebase project configuration.
+        const firebaseConfig = {
+            apiKey: "AIzaSyBlmC_4Td49uysEm2u8oi_4wSkCaULSHTY",
+  authDomain: "oddohack.firebaseapp.com",
+  projectId: "oddohack",
+  storageBucket: "oddohack.firebasestorage.app",
+  messagingSenderId: "1083386693457",
+  appId: "1:1083386693457:web:e1129b47cacf62e4c0f570",
+  measurementId: "G-29VWYY28TB"
+        };
+
+        // Initialize Firebase
+        let app;
+        let auth;
+        let db;
+        let currentUser = null; // To store the current authenticated user
+
+        try {
+            app = initializeApp(firebaseConfig);
+            auth = getAuth(app);
+            db = getFirestore(app);
+        } catch (error) {
+            console.error("Firebase initialization error:", error);
+            alert("Firebase initialization failed. Check console for details and ensure config is correct.");
+        }
+
+        const userDisplayNameElement = document.getElementById('user-display-name');
+        const logoutButton = document.getElementById('logout-button');
+        const askQuestionForm = document.getElementById('ask-question-form');
+        const questionTitleInput = document.getElementById('question-title');
+        const questionDescriptionInput = document.getElementById('question-description');
+        const questionTagsInput = document.getElementById('question-tags');
+        const messageBox = document.getElementById('message-box');
+        const notificationCount = document.getElementById('notification-count');
+
+        // Function to display messages
+        function displayMessage(msg, type = "success") {
+            messageBox.textContent = msg;
+            messageBox.className = `mt-4 p-3 rounded-md text-sm ${type === "success" ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"}`;
+            messageBox.classList.remove('hidden');
+        }
+
+        // Authenticate user
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                currentUser = user; // Store the user object
+                userDisplayNameElement.textContent = user.email || 'User';
+                // loadNotificationsCount(user.uid); // Placeholder for notification count
+            } else {
+                // User is signed out, redirect to login page
+                window.location.href = 'login.html';
+            }
+        });
+
+        // Handle Logout
+        logoutButton.addEventListener('click', async () => {
+            if (auth) {
+                try {
+                    await signOut(auth);
+                    window.location.href = 'index.html'; // Redirect to index.html after logout
+                } catch (error) {
+                    console.error("Logout error:", error);
+                    alert(`Logout failed: ${error.message}`);
+                }
+            }
+        });
+
+        // Handle form submission
+        askQuestionForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            messageBox.classList.add('hidden'); // Hide previous messages
+
+            if (!currentUser) {
+                displayMessage("You must be logged in to ask a question.", "error");
+                return;
+            }
+
+            const title = questionTitleInput.value.trim();
+            const description = questionDescriptionInput.value.trim();
+            const tags = questionTagsInput.value.split(',').map(tag => tag.trim()).filter(tag => tag !== '');
+
+            if (!title || !description) {
+                displayMessage("Please fill in both title and description.", "error");
+                return;
+            }
+
+            try {
+                await addDoc(collection(db, "questions"), {
+                    title: title,
+                    description: description,
+                    tags: tags,
+                    userId: currentUser.uid,
+                    userName: currentUser.email || 'Anonymous', // Use email as display name for now
+                    timestamp: serverTimestamp()
+                });
+
+                displayMessage("Question submitted successfully!", "success");
+                askQuestionForm.reset(); // Clear the form
+                // Optionally, redirect to the user dashboard or the new question's detail page
+                // setTimeout(() => { window.location.href = 'user.html'; }, 2000);
+            } catch (error) {
+                console.error("Error adding document: ", error);
+                displayMessage(`Error submitting question: ${error.message}`, "error");
+            }
+        });
+
+        // Placeholder for loading notification count
+        function loadNotificationsCount(userId) {
+            // In a real app, you would query Firestore for unread notifications for this userId
+            // For now, let's just show a static number or hide it
+            // notificationCount.textContent = '5'; // Example
+            // notificationCount.classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>

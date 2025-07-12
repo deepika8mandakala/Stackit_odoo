@@ -13,7 +13,7 @@
             background-color: #f0f2f5;
         }
         .odoo-navbar {
-            background-color: #4f46e5; /* Indigo-600 */
+            background-color: #c546e5; /* Adjusted to match your provided color */
             color: white;
             padding: 1rem 2rem;
             display: flex;
@@ -29,7 +29,7 @@
             transition: background-color 0.15s ease-in-out;
         }
         .odoo-navbar a:hover {
-            background-color: #4338ca; /* Indigo-700 */
+            background-color: #ca38be; /* Adjusted to match your provided color */
         }
         .odoo-navbar .user-profile {
             display: flex;
@@ -58,16 +58,16 @@
             transition: all 0.15s ease-in-out;
         }
         .odoo-primary-button {
-            background-color: #4f46e5;
+            background-color: #e546da; /* Adjusted to match your provided color */
             color: #ffffff;
             border: 1px solid transparent;
         }
         .odoo-primary-button:hover {
-            background-color: #4338ca;
+            background-color: #af38ca; /* Adjusted to match your provided color */
         }
         .odoo-secondary-button {
             background-color: #e0e7ff;
-            color: #4f46e5;
+            color: #e246e5; /* Adjusted to match your provided color */
             border: 1px solid transparent;
         }
         .odoo-secondary-button:hover {
@@ -85,7 +85,7 @@
             transform: translateY(-2px);
         }
         .question-item a {
-            color: #4f46e5;
+            color: #d046e5; /* Adjusted to match your provided color */
             font-weight: 600;
             text-decoration: none;
         }
@@ -95,7 +95,7 @@
         .tag {
             display: inline-block;
             background-color: #e0e7ff;
-            color: #4f46e5;
+            color: #d046e5; /* Adjusted to match your provided color */
             padding: 0.25rem 0.75rem;
             border-radius: 0.25rem;
             font-size: 0.75rem;
@@ -110,6 +110,21 @@
             width: 100%;
             max-width: 300px; /* Adjust as needed */
             box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        }
+        /* AI Chatbot Icon Styling */
+        .ai-chatbot-icon {
+            position: fixed;
+            bottom: 1.5rem; /* Equivalent to p-6 */
+            right: 1.5rem; /* Equivalent to p-6 */
+            font-size: 3rem; /* Larger icon size */
+            color: #e546da; /* Matches the primary button color from your provided CSS */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+            transition: transform 0.2s ease-in-out;
+            cursor: pointer;
+        }
+        .ai-chatbot-icon:hover {
+            transform: scale(1.1);
+            color: #af38ca; /* Darker shade on hover from your provided CSS */
         }
     </style>
 </head>
@@ -140,9 +155,9 @@
             <h1 class="text-3xl font-bold text-gray-800">Recent Questions</h1>
             <div class="flex space-x-2 items-center">
                 <input type="text" id="search-input" class="search-input" placeholder="Search questions...">
+                <button id="my-questions-filter-btn" class="odoo-button odoo-secondary-button">My Questions</button>
                 <button id="newest-filter-btn" class="odoo-button odoo-secondary-button">Newest (Today)</button>
                 <button id="unanswered-filter-btn" class="odoo-button odoo-secondary-button">Unanswered</button>
-                <!-- Removed Filters/Tags dropdown -->
             </div>
         </div>
 
@@ -159,6 +174,11 @@
         </div>
     </main>
 
+    <!-- AI Chatbot Icon -->
+    <div class="ai-chatbot-icon">
+        <i class="fas fa-robot"></i>
+    </div>
+
     <!-- Firebase SDKs -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
@@ -169,12 +189,12 @@
         // IMPORTANT: Replace these placeholder values with your actual Firebase project configuration.
         const firebaseConfig = {
             apiKey: "AIzaSyBlmC_4Td49uysEm2u8oi_4wSkCaULSHTY",
-  authDomain: "oddohack.firebaseapp.com",
-  projectId: "oddohack",
-  storageBucket: "oddohack.firebasestorage.app",
-  messagingSenderId: "1083386693457",
-  appId: "1:1083386693457:web:e1129b47cacf62e4c0f570",
-  measurementId: "G-29VWYY28TB"
+            authDomain: "oddohack.firebaseapp.com",
+            projectId: "oddohack",
+            storageBucket: "oddohack.firebasestorage.app",
+            messagingSenderId: "1083386693457",
+            appId: "1:1083386693457:web:e1129b47cacf62e4c0f570",
+            measurementId: "G-29VWYY28TB"
         };
 
         // Initialize Firebase
@@ -183,8 +203,9 @@
         let db;
         let allQuestions = []; // Store all questions for client-side filtering
         let currentPage = 1;
-        const itemsPerPage = 10; // Display 2 questions per page
+        const itemsPerPage = 10; // Display 10 questions per page
         let currentFilteredQuestions = []; // Store questions after search/filter for pagination
+        let currentUser = null; // To store the current authenticated user
 
 
         try {
@@ -201,6 +222,7 @@
         const questionsList = document.getElementById('questions-list');
         const notificationCount = document.getElementById('notification-count');
         const searchInput = document.getElementById('search-input');
+        const myQuestionsFilterBtn = document.getElementById('my-questions-filter-btn'); // New button
         const newestFilterBtn = document.getElementById('newest-filter-btn');
         const unansweredFilterBtn = document.getElementById('unanswered-filter-btn');
         const prevPageBtn = document.getElementById('prev-page-btn');
@@ -212,6 +234,7 @@
         onAuthStateChanged(auth, async (user) => {
             if (user) {
                 // User is signed in
+                currentUser = user; // Store the current user
                 userDisplayNameElement.textContent = user.email || 'User'; // Display user email
                 await loadAllQuestions(); // Load all questions initially
                 // loadNotificationsCount(user.uid); // Placeholder for notification count
@@ -325,6 +348,17 @@
             displayQuestionsForCurrentPage();
         });
 
+        // Handle "My Questions" filter button
+        myQuestionsFilterBtn.addEventListener('click', () => {
+            if (currentUser) {
+                currentFilteredQuestions = allQuestions.filter(question => question.userId === currentUser.uid);
+            } else {
+                currentFilteredQuestions = []; // No user logged in, no questions to show
+            }
+            currentPage = 1; // Reset to first page after filter
+            displayQuestionsForCurrentPage();
+        });
+
         // Handle "Newest (Today)" filter button
         newestFilterBtn.addEventListener('click', () => {
             const today = new Date();
@@ -373,3 +407,4 @@
     </script>
 </body>
 </html>
+

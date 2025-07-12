@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ask a Question - Stackit</title>
+    <title>Question - Stackit</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -13,7 +13,7 @@
             background-color: #f0f2f5;
         }
         .odoo-navbar {
-            background-color: #714b67; /* Indigo-600 */
+            background-color: #dd46e5; /* Indigo-600 */
             color: white;
             padding: 1rem 2rem;
             display: flex;
@@ -29,7 +29,7 @@
             transition: background-color 0.15s ease-in-out;
         }
         .odoo-navbar a:hover {
-            background-color: #714b67; /* Indigo-700 */
+            background-color: #bb38ca; /* Indigo-700 */
         }
         .odoo-navbar .user-profile {
             display: flex;
@@ -40,7 +40,7 @@
             width: 32px;
             height: 32px;
             border-radius: 50%;
-            background-color: #714b67; /* Indigo-300 */
+            background-color: #f18bfa; /* Indigo-300 */
         }
         .odoo-card {
             background-color: #ffffff;
@@ -65,34 +65,76 @@
             transition: all 0.15s ease-in-out;
         }
         .odoo-primary-button {
-            background-color: #714b67;
+            background-color: #d046e5;
             color: #ffffff;
             border: 1px solid transparent;
         }
         .odoo-primary-button:hover {
-            background-color: #714b67;
+            background-color: #be38ca;
         }
         .odoo-secondary-button {
             background-color: #e0e7ff;
-            color: #714b67;
+            color: #e546e5;
             border: 1px solid transparent;
         }
         .odoo-secondary-button:hover {
             background-color: #c7d2fe;
         }
-        /* For rich text editor placeholder */
-        .rich-text-editor-placeholder {
-            border: 1px solid #d1d5db;
-            border-radius: 0.375rem;
-            padding: 0.5rem 1rem;
-            min-height: 150px;
-            background-color: #f9fafb;
-            color: #6b7280;
+        .tag {
+            display: inline-block;
+            background-color: #e0e7ff;
+            color: #e246e5;
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .answer-item {
+            background-color: #ffffff;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
             display: flex;
+            align-items: flex-start;
+        }
+        .answer-item.accepted {
+            border: 2px solid #10b981; /* Green-500 for accepted answer */
+            box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.3), 0 2px 4px -1px rgba(16, 185, 129, 0.2);
+        }
+        .vote-controls {
+            display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: center;
-            text-align: center;
-            font-style: italic;
+            margin-right: 1rem;
+            color: #6b7280;
+        }
+        .vote-controls button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: #6b7280;
+            transition: color 0.15s ease-in-out;
+        }
+        .vote-controls button:hover {
+            color: #e546e5;
+        }
+        .vote-controls .vote-count {
+            font-weight: 600;
+            font-size: 1.125rem;
+            margin: 0.25rem 0;
+        }
+        .accepted-badge {
+            background-color: #10b981; /* Green-500 */
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.25rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-left: 1rem;
         }
     </style>
 </head>
@@ -117,52 +159,41 @@
 
     <!-- Main Content -->
     <main class="flex-grow container mx-auto p-4">
-        <div class="odoo-card mx-auto max-w-2xl">
-            <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">Ask a New Question</h1>
+        <div id="question-detail" class="odoo-card mb-6">
+            <p class="text-gray-500 text-center">Loading question details...</p>
+        </div>
 
-            <form id="ask-question-form" class="space-y-5">
-                <div>
-                    <label for="question-title" class="block text-sm font-medium text-gray-700 mb-1">Title</label>
-                    <input
-                        type="text"
-                        id="question-title"
-                        class="odoo-input focus:ring-indigo-500 focus:border-indigo-500"
-                        placeholder="Short and descriptive title"
-                        required
-                    />
-                </div>
-                <div>
-                    <label for="question-description" class="block text-sm font-medium text-gray-700 mb-1">Description</label>
-                    <!-- Placeholder for Rich Text Editor -->
-                    <textarea
-                        id="question-description"
-                        class="odoo-input h-40 resize-y focus:ring-indigo-500 focus:border-indigo-500"
-                        placeholder="Write your question details here..."
-                        required
-                    ></textarea>
-                    <p class="text-sm text-gray-500 mt-1">
-                        * For a rich text editor (bold, italic, lists, etc.), integrate a library like Quill.js or TinyMCE here.
-                    </p>
-                </div>
-                <div>
-                    <label for="question-tags" class="block text-sm font-medium text-gray-700 mb-1">Tags (comma-separated)</label>
-                    <input
-                        type="text"
-                        id="question-tags"
-                        class="odoo-input focus:ring-indigo-500 focus:border-indigo-500"
-                        placeholder="e.g., React, JavaScript, Firebase, CSS"
-                    />
-                    <p class="text-sm text-gray-500 mt-1">Separate tags with commas.</p>
-                </div>
-                <button
-                    type="submit"
-                    id="submit-question-button"
-                    class="odoo-button odoo-primary-button w-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                >
-                    Submit Question
-                </button>
-            </form>
-            <div id="message-box" class="mt-4 hidden"></div>
+        <div id="answers-section" class="mt-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Answers</h2>
+            <div id="answers-list" class="space-y-4">
+                <p class="text-gray-500 text-center">No answers yet. Be the first to answer!</p>
+            </div>
+
+            <div id="post-answer-section" class="odoo-card mt-8">
+                <h3 class="text-xl font-bold text-gray-800 mb-4">Your Answer</h3>
+                <form id="answer-form" class="space-y-4">
+                    <div>
+                        <label for="answer-content" class="block text-sm font-medium text-gray-700 mb-1">Content</label>
+                        <textarea
+                            id="answer-content"
+                            class="odoo-input h-40 resize-y focus:ring-indigo-500 focus:border-indigo-500"
+                            placeholder="Write your answer here..."
+                            required
+                        ></textarea>
+                        <p class="text-sm text-gray-500 mt-1">
+                            * For a rich text editor (bold, italic, lists, etc.), integrate a library like Quill.js or TinyMCE here.
+                        </p>
+                    </div>
+                    <button
+                        type="submit"
+                        id="submit-answer-button"
+                        class="odoo-button odoo-primary-button w-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    >
+                        Post Your Answer
+                    </button>
+                </form>
+                <div id="answer-message-box" class="mt-4 hidden"></div>
+            </div>
         </div>
     </main>
 
@@ -170,7 +201,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, doc, getDoc, collection, query, where, addDoc, serverTimestamp, updateDoc, arrayUnion, arrayRemove, getDocs as getDocsFromCollection } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // Your web app's Firebase configuration
         // IMPORTANT: Replace these placeholder values with your actual Firebase project configuration.
@@ -188,7 +219,9 @@
         let app;
         let auth;
         let db;
-        let currentUser = null; // To store the current authenticated user
+        let currentUser = null;
+        let currentQuestionId = null;
+        let currentQuestionOwnerId = null; // To store the ID of the user who asked the question
 
         try {
             app = initializeApp(firebaseConfig);
@@ -201,26 +234,38 @@
 
         const userDisplayNameElement = document.getElementById('user-display-name');
         const logoutButton = document.getElementById('logout-button');
-        const askQuestionForm = document.getElementById('ask-question-form');
-        const questionTitleInput = document.getElementById('question-title');
-        const questionDescriptionInput = document.getElementById('question-description');
-        const questionTagsInput = document.getElementById('question-tags');
-        const messageBox = document.getElementById('message-box');
+        const questionDetailDiv = document.getElementById('question-detail');
+        const answersListDiv = document.getElementById('answers-list');
+        const answerForm = document.getElementById('answer-form');
+        const answerContentInput = document.getElementById('answer-content');
+        const answerMessageBox = document.getElementById('answer-message-box');
         const notificationCount = document.getElementById('notification-count');
+        const postAnswerSection = document.getElementById('post-answer-section'); // Get the section to hide/show
 
-        // Function to display messages
-        function displayMessage(msg, type = "success") {
-            messageBox.textContent = msg;
-            messageBox.className = `mt-4 p-3 rounded-md text-sm ${type === "success" ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"}`;
-            messageBox.classList.remove('hidden');
+        // Function to display messages for answers
+        function displayAnswerMessage(msg, type = "success") {
+            answerMessageBox.textContent = msg;
+            answerMessageBox.className = `mt-4 p-3 rounded-md text-sm ${type === "success" ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"}`;
+            answerMessageBox.classList.remove('hidden');
         }
 
-        // Authenticate user
-        onAuthStateChanged(auth, (user) => {
+        // Authenticate user and load data
+        onAuthStateChanged(auth, async (user) => {
             if (user) {
-                currentUser = user; // Store the user object
+                currentUser = user;
                 userDisplayNameElement.textContent = user.email || 'User';
                 // loadNotificationsCount(user.uid); // Placeholder for notification count
+
+                // Get question ID from URL
+                const urlParams = new URLSearchParams(window.location.search);
+                currentQuestionId = urlParams.get('id');
+
+                if (currentQuestionId) {
+                    await loadQuestionAndAnswers(currentQuestionId);
+                } else {
+                    questionDetailDiv.innerHTML = '<p class="text-red-500 text-center">Question ID not found in URL.</p>';
+                    postAnswerSection.classList.add('hidden'); // Hide answer section if no question
+                }
             } else {
                 // User is signed out, redirect to login page
                 window.location.href = 'login.html';
@@ -240,44 +285,232 @@
             }
         });
 
-        // Handle form submission
-        askQuestionForm.addEventListener('submit', async (e) => {
+        // Function to load question and answers
+        async function loadQuestionAndAnswers(questionId) {
+            questionDetailDiv.innerHTML = '<p class="text-gray-500 text-center">Loading question details...</p>';
+            answersListDiv.innerHTML = '<p class="text-gray-500 text-center">Loading answers...</p>';
+
+            try {
+                // Load Question
+                const questionRef = doc(db, "questions", questionId);
+                const questionSnap = await getDoc(questionRef);
+
+                if (questionSnap.exists()) {
+                    const question = questionSnap.data();
+                    currentQuestionOwnerId = question.userId; // Store question owner ID
+                    const tagsHtml = question.tags.map(tag => `<span class="tag">${tag}</span>`).join('');
+                    questionDetailDiv.innerHTML = `
+                        <h1 class="text-3xl font-bold text-gray-800 mb-4">${question.title}</h1>
+                        <p class="text-gray-700 mb-4">${question.description}</p>
+                        <div class="flex flex-wrap items-center mt-3 border-t pt-3 border-gray-200">
+                            ${tagsHtml}
+                            <span class="text-gray-500 text-sm ml-auto">Asked by ${question.userName || 'Anonymous'} on ${question.timestamp ? new Date(question.timestamp.toDate()).toLocaleDateString() : 'N/A'}</span>
+                        </div>
+                    `;
+                } else {
+                    questionDetailDiv.innerHTML = '<p class="text-red-500 text-center">Question not found.</p>';
+                    postAnswerSection.classList.add('hidden'); // Hide answer section if question not found
+                    return;
+                }
+
+                // Load Answers
+                const answersQuery = query(collection(db, "answers"), where("questionId", "==", questionId));
+                const answersSnap = await getDocsFromCollection(answersQuery); // Renamed getDocs to avoid conflict
+                answersListDiv.innerHTML = ''; // Clear loading message
+
+                if (answersSnap.empty) {
+                    answersListDiv.innerHTML = '<p class="text-gray-500 text-center">No answers yet. Be the first to answer!</p>';
+                } else {
+                    answersSnap.forEach((docSnap) => {
+                        const answer = docSnap.data();
+                        const answerId = docSnap.id;
+                        const upvotes = answer.upvotes || [];
+                        const downvotes = answer.downvotes || [];
+                        const totalVotes = upvotes.length - downvotes.length;
+
+                        const isAccepted = answer.accepted ? '<span class="accepted-badge">Accepted Answer</span>' : '';
+                        const isQuestionOwner = currentUser && currentUser.uid === currentQuestionOwnerId;
+                        
+                        // Check if current user has upvoted/downvoted
+                        const hasUpvoted = currentUser && upvotes.includes(currentUser.uid);
+                        const hasDownvoted = currentUser && downvotes.includes(currentUser.uid);
+
+                        const upvoteClass = hasUpvoted ? 'text-indigo-600' : '';
+                        const downvoteClass = hasDownvoted ? 'text-indigo-600' : '';
+
+                        const acceptButtonHtml = isQuestionOwner && !answer.accepted ?
+                            `<button class="odoo-button odoo-secondary-button ml-auto text-sm" data-answer-id="${answerId}" data-action="accept">Accept</button>` : '';
+
+                        const answerHtml = `
+                            <div class="answer-item ${answer.accepted ? 'accepted' : ''}">
+                                <div class="vote-controls">
+                                    <button class="upvote-btn ${upvoteClass}" data-answer-id="${answerId}" data-action="upvote"><i class="fas fa-caret-up"></i></button>
+                                    <span class="vote-count">${totalVotes}</span>
+                                    <button class="downvote-btn ${downvoteClass}" data-answer-id="${answerId}" data-action="downvote"><i class="fas fa-caret-down"></i></button>
+                                </div>
+                                <div class="flex-grow">
+                                    <div class="flex items-center mb-2">
+                                        <span class="font-semibold text-gray-800">${answer.userName || 'Anonymous'}</span>
+                                        <span class="text-gray-500 text-xs ml-2">answered on ${answer.timestamp ? new Date(answer.timestamp.toDate()).toLocaleDateString() : 'N/A'}</span>
+                                        ${isAccepted}
+                                        ${acceptButtonHtml}
+                                    </div>
+                                    <p class="text-gray-700">${answer.content}</p>
+                                </div>
+                            </div>
+                        `;
+                        answersListDiv.innerHTML += answerHtml;
+                    });
+
+                    // Attach event listeners for voting and accepting after answers are rendered
+                    document.querySelectorAll('.upvote-btn').forEach(button => {
+                        button.addEventListener('click', (e) => handleVote(e, 'upvote'));
+                    });
+                    document.querySelectorAll('.downvote-btn').forEach(button => {
+                        button.addEventListener('click', (e) => handleVote(e, 'downvote'));
+                    });
+                    document.querySelectorAll('button[data-action="accept"]').forEach(button => {
+                        button.addEventListener('click', handleAcceptAnswer);
+                    });
+                }
+            } catch (error) {
+                console.error("Error loading question or answers:", error);
+                questionDetailDiv.innerHTML = '<p class="text-red-500 text-center">Error loading content. Please try again.</p>';
+                answersListDiv.innerHTML = '';
+                postAnswerSection.classList.add('hidden'); // Hide answer section on error
+            }
+        }
+
+        // Handle Answer Submission
+        answerForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            messageBox.classList.add('hidden'); // Hide previous messages
+            answerMessageBox.classList.add('hidden');
 
             if (!currentUser) {
-                displayMessage("You must be logged in to ask a question.", "error");
+                displayAnswerMessage("You must be logged in to post an answer.", "error");
+                return;
+            }
+            if (!currentQuestionId) {
+                displayAnswerMessage("Cannot post answer: Question ID is missing.", "error");
                 return;
             }
 
-            const title = questionTitleInput.value.trim();
-            const description = questionDescriptionInput.value.trim();
-            const tags = questionTagsInput.value.split(',').map(tag => tag.trim()).filter(tag => tag !== '');
-
-            if (!title || !description) {
-                displayMessage("Please fill in both title and description.", "error");
+            const content = answerContentInput.value.trim();
+            if (!content) {
+                displayAnswerMessage("Please write your answer content.", "error");
                 return;
             }
 
             try {
-                await addDoc(collection(db, "questions"), {
-                    title: title,
-                    description: description,
-                    tags: tags,
+                await addDoc(collection(db, "answers"), {
+                    questionId: currentQuestionId,
+                    content: content,
                     userId: currentUser.uid,
-                    userName: currentUser.email || 'Anonymous', // Use email as display name for now
-                    timestamp: serverTimestamp()
+                    userName: currentUser.email || 'Anonymous',
+                    timestamp: serverTimestamp(),
+                    upvotes: [],
+                    downvotes: [],
+                    accepted: false
                 });
 
-                displayMessage("Question submitted successfully!", "success");
-                askQuestionForm.reset(); // Clear the form
-                // Optionally, redirect to the user dashboard or the new question's detail page
-                // setTimeout(() => { window.location.href = 'user.html'; }, 2000);
+                displayAnswerMessage("Answer posted successfully!", "success");
+                answerContentInput.value = ''; // Clear the form
+                await loadQuestionAndAnswers(currentQuestionId); // Reload answers to show the new one
+                // TODO: Implement notification for question owner
             } catch (error) {
-                console.error("Error adding document: ", error);
-                displayMessage(`Error submitting question: ${error.message}`, "error");
+                console.error("Error adding answer: ", error);
+                displayAnswerMessage(`Error posting answer: ${error.message}`, "error");
             }
         });
+
+        // Handle Voting
+        async function handleVote(event, type) {
+            if (!currentUser) {
+                displayAnswerMessage("You must be logged in to vote.", "error");
+                return;
+            }
+
+            const answerId = event.currentTarget.dataset.answerId;
+            const answerRef = doc(db, "answers", answerId);
+
+            try {
+                const answerSnap = await getDoc(answerRef);
+                if (!answerSnap.exists()) {
+                    displayAnswerMessage("Answer not found.", "error");
+                    return;
+                }
+
+                const answer = answerSnap.data();
+                let upvotes = answer.upvotes || [];
+                let downvotes = answer.downvotes || [];
+
+                const userId = currentUser.uid;
+
+                if (type === 'upvote') {
+                    if (upvotes.includes(userId)) {
+                        // Already upvoted, remove upvote
+                        upvotes = upvotes.filter(id => id !== userId);
+                    } else {
+                        // Add upvote, remove downvote if exists
+                        upvotes.push(userId);
+                        downvotes = downvotes.filter(id => id !== userId);
+                    }
+                } else if (type === 'downvote') {
+                    if (downvotes.includes(userId)) {
+                        // Already downvoted, remove downvote
+                        downvotes = downvotes.filter(id => id !== userId);
+                    } else {
+                        // Add downvote, remove upvote if exists
+                        downvotes.push(userId);
+                        upvotes = upvotes.filter(id => id !== userId);
+                    }
+                }
+
+                await updateDoc(answerRef, {
+                    upvotes: upvotes,
+                    downvotes: downvotes
+                });
+
+                await loadQuestionAndAnswers(currentQuestionId); // Reload answers to update vote counts
+            } catch (error) {
+                console.error("Error voting:", error);
+                displayAnswerMessage(`Error casting vote: ${error.message}`, "error");
+            }
+        }
+
+        // Handle Accept Answer
+        async function handleAcceptAnswer(event) {
+            if (!currentUser || currentUser.uid !== currentQuestionOwnerId) {
+                displayAnswerMessage("You are not authorized to accept this answer.", "error");
+                return;
+            }
+
+            const answerIdToAccept = event.currentTarget.dataset.answerId;
+
+            try {
+                // First, unaccept any previously accepted answers for this question
+                const existingAcceptedAnswersQuery = query(
+                    collection(db, "answers"),
+                    where("questionId", "==", currentQuestionId),
+                    where("accepted", "==", true)
+                );
+                const existingAcceptedSnap = await getDocsFromCollection(existingAcceptedAnswersQuery);
+                for (const docSnap of existingAcceptedSnap.docs) {
+                    await updateDoc(doc(db, "answers", docSnap.id), { accepted: false });
+                }
+
+                // Then, accept the selected answer
+                const answerRef = doc(db, "answers", answerIdToAccept);
+                await updateDoc(answerRef, { accepted: true });
+
+                displayAnswerMessage("Answer accepted successfully!", "success");
+                await loadQuestionAndAnswers(currentQuestionId); // Reload to show accepted state
+                // TODO: Implement notification for answer owner
+            } catch (error) {
+                console.error("Error accepting answer:", error);
+                displayAnswerMessage(`Error accepting answer: ${error.message}`, "error");
+            }
+        }
 
         // Placeholder for loading notification count
         function loadNotificationsCount(userId) {

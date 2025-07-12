@@ -1,10 +1,11 @@
-# StackIt – A Minimal Q&A Forum Platform
+# **Problem Statement**:
+## StackIt – A Minimal Q&A Forum Platform
 
 **StackIt** is a simple and minimal question-and-answer forum platform. It is designed to support collaborative learning and structured knowledge 
 
 ---
 
-## 👥 Team Members
+##  Team Members
 
 | Name                   | Email                                |
 |------------------------|----------------------------------------|

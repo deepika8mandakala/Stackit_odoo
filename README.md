@@ -14,4 +14,5 @@
 | Nalluri Ruchira       | ruchiranalluri@gmail.com               |
 | Gedela Satya mohan    | satyamohan221@gmail.com                |
 
-Demo vedio link : https://drive.google.com/file/d/1bBqp_0VG3miNMiHoYj9seUD-i_tCTb_w/view?usp=sharing
+Demo video link : https://drive.google.com/file/d/1bBqp_0VG3miNMiHoYj9seUD-i_tCTb_w/view?usp=sharing<br>
+Web Application link[https://stackitodoo-omega.vercel.app/]
